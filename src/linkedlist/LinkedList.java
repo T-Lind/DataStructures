@@ -1,10 +1,8 @@
 package linkedlist;
 
-import common.ListNode;
-
 public class LinkedList<T> {
 
-    private ListNode<T> firstItem;
+    private Node<T> firstItem;
 
     public LinkedList() {}
 
@@ -63,14 +61,14 @@ public class LinkedList<T> {
         return node.get();
     }
 
-    public ListNode<T> getEnd() {
+    public Node<T> getEnd() {
         var end = firstItem;
         while (end.getNext() != null)
             end = end.getNext();
         return end;
     }
 
-    public ListNode<T> getNode(int idx) {
+    public Node<T> getNode(int idx) {
         var end = firstItem;
         for (int i = 0; i < idx; i++)
             end = end.getNext();
