@@ -1,9 +1,5 @@
 package unrolledlinkedlist;
 
-import common.BasicNode;
-
-import java.util.Arrays;
-
 public class UnrolledNode<T> {
     private T[] values;
 
@@ -59,6 +55,9 @@ public class UnrolledNode<T> {
 
     public T removeLast(){
         stored--;
+        if(stored < 0){
+            throw new IndexOutOfBoundsException("Tried to remove  anegative index of an Unrolled Node!");
+        }
         var end = values[stored];
         values[stored] = null;
         return end;
