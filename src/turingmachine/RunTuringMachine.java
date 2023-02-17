@@ -27,6 +27,7 @@ public class RunTuringMachine {
                 BEGIN INFO
                 SIZE 2
                 START POS 0
+                
                 END INFO
                 BEGIN COMMANDS
                 CMD SET NOT GET MOVE 1 DONE

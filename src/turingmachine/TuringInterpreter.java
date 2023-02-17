@@ -80,8 +80,11 @@ public class TuringInterpreter extends CommandList {
                         System.out.println(subCommands[j]);
                         if (Objects.equals(subCommands[j], SET)) {
                             if (Objects.equals(subCommands[j + 1], NOT)) {
-                                if (Objects.equals(subCommands[j + 2], GET))
+                                System.out.println("notting...");
+                                if (Objects.equals(subCommands[j + 2], GET)){
+                                    System.out.println("getting...");
                                     finalMachine.getObserver().set(!finalMachine.getBool());
+                                }
                                 if (Objects.equals(subCommands[j + 2], STORED))
                                     finalMachine.getObserver().set(!finalMachine.getStoredBool());
 
