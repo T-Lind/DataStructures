@@ -1,8 +1,17 @@
-package turingmachine;
+package turingmachine.components;
 
 public class Item {
     private Digit state;
     private Command command;
+
+    public Item(boolean state){
+        this.state = new Digit(state);
+    }
+
+    public Item(int state) throws ValueError {
+        this.state = new Digit(state);
+    }
+
 
     public Item(boolean state, Command command) {
         this.state = new Digit(state);
@@ -20,6 +29,10 @@ public class Item {
         return old;
     }
 
+    public void runCommand() throws ValueError {
+        command.invoke(state);
+    }
+
     public Digit get(){
         return state;
     }
@@ -28,5 +41,9 @@ public class Item {
         var old = this.state;
         this.state = state;
         return old;
+    }
+
+    public String toString(){
+        return state.toString();
     }
 }

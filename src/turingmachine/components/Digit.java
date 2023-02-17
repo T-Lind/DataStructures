@@ -1,10 +1,4 @@
-package turingmachine;
-
-class ValueError extends Exception {
-    public ValueError(String message){
-        super(message);
-    }
-}
+package turingmachine.components;
 
 public class Digit {
     private boolean state;
@@ -36,5 +30,9 @@ public class Digit {
 
     public void set(boolean state){
         this.state = state;
+    }
+
+    public String toString(){
+        return getInt()+"";
     }
 }
