@@ -1,9 +1,9 @@
 package turingmachine;
 
-import turingmachine.components.ValueError;
+import turingmachine.components.ValueException;
 
 public class RunTuringMachine {
-    public static void main(String[] args) throws ValueError {
+    public static void main(String[] args) throws ValueException {
         var machine = new TuringMachine(0, new int[]{0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1});
         var observer = machine.getObserver();
         while (!observer.atTail()) {

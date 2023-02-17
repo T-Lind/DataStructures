@@ -2,18 +2,18 @@ package turingmachine.components;
 
 import turingmachine.TuringMachine;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Item {
     private Digit state;
     private ArrayList<Command> commands;
+    private boolean hasRun = false;
 
     public Item(boolean state){
         this.state = new Digit(state);
     }
 
-    public Item(int state) throws ValueError {
+    public Item(int state) throws ValueException {
         this.state = new Digit(state);
         commands = new ArrayList<>();
     }
@@ -37,11 +37,13 @@ public class Item {
         this.commands = commands;
     }
 
-    public void runCommand(TuringMachine machine) throws ValueError {
-        System.out.println("Size of commands run: "+commands.size());
-        if(commands != null)
-            for(Command cmd: commands)
-                cmd.invoke(state, machine);
+    public void runCommand(TuringMachine machine) throws ValueException {
+        if(commands != null && !hasRun) {
+            hasRun = true;
+            for (Command command : commands) {
+                command.invoke(state, machine);
+            }
+        }
     }
 
     public Digit get(){
@@ -49,7 +51,6 @@ public class Item {
     }
 
     public Digit set(Digit state){
-        System.out.println("setting");
         var old = this.state;
         this.state = state;
         return old;

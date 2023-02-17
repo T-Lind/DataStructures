@@ -3,7 +3,7 @@ package turingmachine.components;
 public class Digit {
     private boolean state;
 
-    public Digit(int state) throws ValueError {
+    public Digit(int state) throws ValueException {
         set(state);
     }
 
@@ -21,9 +21,9 @@ public class Digit {
         return state;
     }
 
-    public void set(int state) throws ValueError {
+    public void set(int state) throws ValueException {
         if(state != 0 && state != 1)
-            throw new ValueError("Improper state specified");
+            throw new ValueException("Improper state specified");
         this.state = state == 1;
 
     }

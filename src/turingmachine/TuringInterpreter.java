@@ -1,18 +1,16 @@
 package turingmachine;
 
 import turingmachine.components.Command;
-import turingmachine.components.Digit;
 import turingmachine.components.Stage;
-import turingmachine.components.ValueError;
+import turingmachine.components.ValueException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
 public class TuringInterpreter extends CommandList {
-    private TuringMachine machine;
 
-    public TuringInterpreter(String commandToFollow) throws ValueError {
+    public TuringInterpreter(String commandToFollow) throws ValueException {
         Stage currentStage = Stage.NONE;
 
 
@@ -26,7 +24,7 @@ public class TuringInterpreter extends CommandList {
         boolean executeAuto = false;
         TuringMachine machine = new TuringMachine(len, startPos);
         for (int i = 0; i < lines.length; i++) {
-            System.out.println(lines[i]);
+            System.out.println(i + " " + lines[i]);
             if (Objects.equals(lines[i], BEGIN_INFO))
                 currentStage = Stage.INFO;
             if (Objects.equals(lines[i], END_INFO)) {
@@ -46,7 +44,7 @@ public class TuringInterpreter extends CommandList {
                 executeAuto = true;
             }
             if (lines[i].startsWith(SIZE) && currentStage == Stage.INFO) {
-                String number = lines[1].substring(SIZE.length());
+                String number = lines[i].substring(SIZE.length());
                 len = Integer.parseInt(number);
             }
             if (lines[i].startsWith(START_POS) && currentStage == Stage.INFO) {
@@ -67,22 +65,28 @@ public class TuringInterpreter extends CommandList {
                 ArrayList<Command> commands = new ArrayList<>();
 
                 for (int j = 0; j < subCommands.length; j++) {
+                    System.out.println("    " + j + " " + subCommands[j]);
+
                     if (Objects.equals(subCommands[j], DONE)) {
-                        if (executeAuto)
-                            commands.add((state, m) -> m.getObserver().runCommand(m));
+                        if (executeAuto) {
+                            commands.add((state, m) -> {
+                                m.getObserver().runCommand(m);
+                            });
+                        }
                         machine.getObserver().setCommands(commands);
-                        return;
+                        break;
                     }
                     if (Objects.equals(subCommands[j], MOVE_RELATIVE)) {
-                        machine.getObserver().moveRelative(Integer.parseInt(subCommands[j + 1]));
+                        int finalJ = j;
+                        commands.add((state, m) -> m.getObserver().moveRelative(Integer.parseInt(subCommands[finalJ + 1])));
                     }
                     if (Objects.equals(subCommands[j], SET_POSITION)) {
-                        machine.getObserver().setPosition(Integer.parseInt(subCommands[j + 1]));
+                        int finalJ1 = j;
+                        commands.add((state, m) -> m.getObserver().setPosition(Integer.parseInt(subCommands[finalJ1 + 1])));
                     }
-                    System.out.println("    "+subCommands[j]);
                     if (Objects.equals(subCommands[j], SET)) {
                         if (Objects.equals(subCommands[j + 1], NOT)) {
-                            if (Objects.equals(subCommands[j + 2], GET)){
+                            if (Objects.equals(subCommands[j + 2], GET)) {
                                 commands.add((state, m) -> m.getObserver().set(!m.getBool()));
                             }
                             if (Objects.equals(subCommands[j + 2], STORED))
@@ -93,10 +97,10 @@ public class TuringInterpreter extends CommandList {
                                 commands.add((state, m) -> m.getObserver().set(m.getBool()));
                             if (Objects.equals(subCommands[j + 1], STORED))
                                 commands.add((state, m) -> m.getObserver().set(m.getStoredBool()));
-                            if(Objects.equals(subCommands[j + 1], TRUE)){
+                            if (Objects.equals(subCommands[j + 1], TRUE)) {
                                 commands.add((state, m) -> m.getObserver().set(true));
                             }
-                            if(Objects.equals(subCommands[j + 1], FALSE))
+                            if (Objects.equals(subCommands[j + 1], FALSE))
                                 commands.add((state, m) -> m.getObserver().set(false));
                         }
                     }

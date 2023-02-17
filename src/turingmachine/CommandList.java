@@ -1,23 +1,23 @@
 package turingmachine;
 
 public class CommandList {
-    protected final static String BEGIN_INFO = "BEGIN INFO";
-    protected final static String END_INFO = "END INFO";
-    protected final static String BEGIN_COMMANDSET = "BEGIN COMMANDS";
-    protected final static String END_COMMANDSET = "END COMMANDS";
-    protected final static String SIZE = "SIZE ";
-    protected final static String START_POS = "START POS ";
-    protected final static String EXECUTE_AUTO = "EXECUTE AUTO";
-    protected final static String MOVE_RELATIVE = "MOVE ";
-    protected final static String SET_POSITION = "SET POSITION ";
-    protected final static String RUN = "RUN";
-    protected final static String CMD = "CMD ";
-    protected final static String DONE = "DONE";
-    protected final static String STORED = "STORED ";
-    protected final static String SET_STORED = "SET_STORED ";
-    protected final static String SET = "SET";
-    protected final static String TRUE = "TRUE";
-    protected final static String FALSE = "FALSE";
-    protected final static String GET = "GET";
-    protected final static String NOT = "NOT";
+    public final static String BEGIN_INFO = "BEGIN INFO";
+    public final static String END_INFO = "END INFO";
+    public final static String BEGIN_COMMANDSET = "BEGIN COMMANDS";
+    public final static String END_COMMANDSET = "END COMMANDS";
+    public final static String SIZE = "SIZE ";
+    public final static String START_POS = "START POS ";
+    public final static String EXECUTE_AUTO = "EXECUTE AUTO";
+    public final static String MOVE_RELATIVE = "MOVE ";
+    public final static String SET_POSITION = "SET POSITION ";
+    public final static String RUN = "RUN";
+    public final static String CMD = "CMD ";
+    public final static String DONE = "DONE";
+    public final static String STORED = "STORED ";
+    public final static String SET_STORED = "SET_STORED ";
+    public final static String SET = "SET";
+    public final static String TRUE = "TRUE";
+    public final static String FALSE = "FALSE";
+    public final static String GET = "GET";
+    public final static String NOT = "NOT";
 }
