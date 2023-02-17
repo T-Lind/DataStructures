@@ -59,41 +59,45 @@ public class TuringInterpreter extends CommandList {
                 machine.getObserver().moveRelative(Integer.parseInt(number));
             }
             if (lines[i].startsWith(CMD) && commmandStage) {
-                String[] commands = lines[i].substring(CMD.length()).split(" ");
+                String[] subCommands = lines[i].substring(CMD.length()).split(" ");
 
                 // Generated final variables
                 TuringMachine finalMachine = machine;
                 boolean finalExecuteAuto = executeAuto;
                 Command newCmd = (state) -> {
-                    for (int j = 0; j < commands.length; j++) {
-                        if (Objects.equals(commands[j], DONE)) {
+                    for (int j = 0; j < subCommands.length; j++) {
+                        if (Objects.equals(subCommands[j], DONE)) {
                             if (finalExecuteAuto)
                                 finalMachine.getObserver().runCommand();
                             return;
                         }
-                        if (Objects.equals(commands[j], MOVE_RELATIVE)) {
-                            finalMachine.getObserver().moveRelative(Integer.parseInt(commands[j + 1]));
+                        if (Objects.equals(subCommands[j], MOVE_RELATIVE)) {
+                            finalMachine.getObserver().moveRelative(Integer.parseInt(subCommands[j + 1]));
                         }
-                        if (Objects.equals(commands[j], SET_POSITION)) {
-                            finalMachine.getObserver().setPosition(Integer.parseInt(commands[j + 1]));
+                        if (Objects.equals(subCommands[j], SET_POSITION)) {
+                            finalMachine.getObserver().setPosition(Integer.parseInt(subCommands[j + 1]));
                         }
-                        if (Objects.equals(commands[j], SET)) {
-                            if (Objects.equals(commands[j + 1], NOT)) {
-                                if (Objects.equals(commands[j + 2], GET))
+                        System.out.println(subCommands[j]);
+                        if (Objects.equals(subCommands[j], SET)) {
+                            if (Objects.equals(subCommands[j + 1], NOT)) {
+                                if (Objects.equals(subCommands[j + 2], GET))
                                     finalMachine.getObserver().set(!finalMachine.getBool());
-                                if (Objects.equals(commands[j + 2], STORED))
+                                if (Objects.equals(subCommands[j + 2], STORED))
                                     finalMachine.getObserver().set(!finalMachine.getStoredBool());
 
                             } else {
-                                if (Objects.equals(commands[j + 1], GET))
+                                if (Objects.equals(subCommands[j + 1], GET))
                                     finalMachine.getObserver().set(finalMachine.getBool());
-                                if (Objects.equals(commands[j + 1], STORED))
+                                if (Objects.equals(subCommands[j + 1], STORED))
                                     finalMachine.getObserver().set(finalMachine.getStoredBool());
-
+                                if(Objects.equals(subCommands[j + 1], TRUE))
+                                    finalMachine.getObserver().set(true);
+                                if(Objects.equals(subCommands[j + 1], FALSE))
+                                    finalMachine.getObserver().set(false);
 
                             }
                         }
-                        if (Objects.equals(commands[j], SET_STORED)) {
+                        if (Objects.equals(subCommands[j], SET_STORED)) {
                             finalMachine.setStored(finalMachine.getBool());
                         }
                     }
@@ -102,5 +106,6 @@ public class TuringInterpreter extends CommandList {
             }
         } // END LOOP
         System.out.println("Len: " + len + " Start pos: " + startPos);
+        System.out.println(machine.toString());
     }
 }

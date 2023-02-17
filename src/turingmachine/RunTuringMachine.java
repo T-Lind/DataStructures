@@ -6,7 +6,7 @@ public class RunTuringMachine {
     public static void main(String[] args) throws ValueError {
         var machine = new TuringMachine(0, new int[]{0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1});
         var observer = machine.getObserver();
-        while(!observer.atTail()){
+        while (!observer.atTail()) {
             observer.setCommand(state -> {
                 state.set(!state.getBoolean());
                 observer.moveRelative(1);
@@ -23,17 +23,15 @@ public class RunTuringMachine {
         System.out.println(observer);
 
         System.out.println(machine);
-        var interpreter =new TuringInterpreter("""
+        var interpreter = new TuringInterpreter("""
                 BEGIN INFO
-                SIZE 100
-                START POS 4
+                SIZE 2
+                START POS 0
                 END INFO
                 BEGIN COMMANDS
-                CMD SET NOT GET STORED GET MOVE 1 DONE
+                CMD SET NOT GET MOVE 1 DONE
                 MOVE 1
-                CMD SET NOT STORED MOVE -2 DONE
-                MOVE 1
-                END COMMANDS
+                CMD SET NOT GET DONE
                 RUN
                 """);
     }

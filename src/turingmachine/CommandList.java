@@ -15,7 +15,9 @@ public class CommandList {
     protected final static String DONE = "DONE ";
     protected final static String STORED = "STORED ";
     protected final static String SET_STORED = "SET_STORED ";
-    protected final static String SET = "SET ";
+    protected final static String SET = "SET";
+    protected final static String TRUE = "TRUE";
+    protected final static String FALSE = "FALSE";
     protected final static String GET = "GET ";
     protected final static String NOT = "NOT ";
 }
