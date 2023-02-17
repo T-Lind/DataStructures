@@ -6,6 +6,8 @@ public class TuringMachine {
     private Tape tape;
     private Observer observer;
 
+    private Item stored;
+
     public TuringMachine(int len){
         this(len, 0);
     }
@@ -14,6 +16,7 @@ public class TuringMachine {
         tape = new Tape(len);
         observer = new Observer(startPos, tape);
     }
+
 
     public TuringMachine(int startPos, int... ints) throws ValueError {
         tape = new Tape(ints);
@@ -26,6 +29,19 @@ public class TuringMachine {
 
     public Observer getObserver(){
         return observer;
+    }
+    public Tape getTape(){
+        return tape;
+    }
+
+    public void setStored(boolean state) throws ValueError {
+        stored = new Item(state);
+    }
+    public boolean getBool(){
+        return tape.get(getObserver().getPosition()).getBoolean();
+    }
+    public boolean getStoredBool(){
+        return stored.get().getBoolean();
     }
 
     public Digit set(int idx, Digit value){

@@ -30,7 +30,8 @@ public class Item {
     }
 
     public void runCommand() throws ValueError {
-        command.invoke(state);
+        if(command != null)
+            command.invoke(state);
     }
 
     public Digit get(){
