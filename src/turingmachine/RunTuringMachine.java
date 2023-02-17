@@ -7,33 +7,22 @@ public class RunTuringMachine {
         var machine = new TuringMachine(0, new int[]{0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1});
         var observer = machine.getObserver();
         while (!observer.atTail()) {
-            observer.setCommand(state -> {
+            observer.addCommand((state, m) -> {
                 state.set(!state.getBoolean());
                 observer.moveRelative(1);
-                observer.runCommand();
+                observer.runCommand(m);
             });
             observer.moveRelative(1);
         }
-        observer.setCommand(state -> state.set(!state.getBoolean()));
+        observer.addCommand((state, m) -> state.set(!state.getBoolean()));
 
         observer.setPosition(0);
         System.out.println(observer);
 
-        observer.runCommand();
+        observer.runCommand(machine);
         System.out.println(observer);
 
         System.out.println(machine);
-        var interpreter = new TuringInterpreter("""
-                BEGIN INFO
-                SIZE 2
-                START POS 0
-                
-                END INFO
-                BEGIN COMMANDS
-                CMD SET NOT GET MOVE 1 DONE
-                MOVE 1
-                CMD SET NOT GET DONE
-                RUN
-                """);
+
     }
 }

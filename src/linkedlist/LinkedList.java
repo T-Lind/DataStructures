@@ -4,7 +4,12 @@ public class LinkedList<T> {
 
     private Node<T> firstItem;
 
-    public LinkedList() {}
+    public LinkedList(){
+
+    }
+    public LinkedList(T defaultItem) {
+        add(defaultItem);
+    }
 
     public void add(T value) {
         if (size() == 0) {
@@ -83,6 +88,18 @@ public class LinkedList<T> {
             size++;
         }
         return size;
+    }
+
+    public int indexOf(T item){
+        var end = firstItem;
+        int idx = 0;
+        while (end != null) {
+            if(end.get().equals(item))
+                return idx;
+            end = end.getNext();
+            idx++;
+        }
+        return -1;
     }
 
     public String toString() {

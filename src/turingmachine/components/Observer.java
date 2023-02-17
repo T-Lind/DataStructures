@@ -1,5 +1,9 @@
 package turingmachine.components;
 
+import turingmachine.TuringMachine;
+
+import java.util.ArrayList;
+
 public class Observer {
     private final int start;
 
@@ -13,8 +17,11 @@ public class Observer {
         this.tape = tape;
     }
 
-    public void runCommand() throws ValueError {
-            tape.getItem(position).runCommand();
+    public void runCommand(TuringMachine machine) throws ValueError {
+            tape.getItem(position).runCommand(machine);
+    }
+    public void setCommands(ArrayList<Command> commands){
+        tape.getItem(position).setCommands(commands);
     }
 
     public void setPosition(int position){
@@ -27,9 +34,6 @@ public class Observer {
     public void moveRelative(int delta){
         if(position + delta >= 0 && position + delta < tape.size())
             position += delta;
-        else{
-            System.out.println();
-        }
     }
 
     public boolean atTail(){
@@ -44,8 +48,8 @@ public class Observer {
         return position == 0;
     }
 
-    public Command setCommand(Command command){
-        return tape.getItem(position).setCommand(command);
+    public void addCommand(Command command){
+        tape.getItem(position).addCommand(command);
     }
 
     public Item getItem(){

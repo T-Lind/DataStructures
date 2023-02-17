@@ -12,7 +12,7 @@ public class CommandList {
     protected final static String SET_POSITION = "SET POSITION ";
     protected final static String RUN = "RUN";
     protected final static String CMD = "CMD ";
-    protected final static String DONE = "DONE ";
+    protected final static String DONE = "DONE";
     protected final static String STORED = "STORED ";
     protected final static String SET_STORED = "SET_STORED ";
     protected final static String SET = "SET";
