@@ -12,11 +12,11 @@ public class RunInterpreter {
                 END INFO
                 
                 BEGIN COMMANDS
-                CMD SET TRUE MOVE 1 DONE
+                CMD SET NOT GET MOVE 1 DONE
                 MOVE 1
-                CMD SET TRUE MOVE 1 DONE
+                CMD SET NOT GET MOVE 1 DONE
                 MOVE 1
-                CMD SET TRUE DONE
+                CMD SET NOT GET DONE
                 END COMMANDS
                 RUN
                 """);

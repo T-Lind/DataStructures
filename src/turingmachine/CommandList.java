@@ -9,6 +9,7 @@ public class CommandList {
     public final static String START_POS = "START POS ";
     public final static String EXECUTE_AUTO = "EXECUTE AUTO";
     public final static String MOVE_RELATIVE = "MOVE ";
+    public final static String MOVE_RELATIVE_NSPACE = "MOVE";
     public final static String SET_POSITION = "SET POSITION ";
     public final static String RUN = "RUN";
     public final static String CMD = "CMD ";

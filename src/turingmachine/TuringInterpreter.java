@@ -76,9 +76,9 @@ public class TuringInterpreter extends CommandList {
                         machine.getObserver().setCommands(commands);
                         break;
                     }
-                    if (Objects.equals(subCommands[j], MOVE_RELATIVE)) {
-                        int finalJ = j;
-                        commands.add((state, m) -> m.getObserver().moveRelative(Integer.parseInt(subCommands[finalJ + 1])));
+                    if (Objects.equals(subCommands[j], MOVE_RELATIVE_NSPACE)) {
+                        int amountToMove = Integer.parseInt(subCommands[j + 1]);
+                        commands.add((state, m) -> m.getObserver().moveRelative(amountToMove));
                     }
                     if (Objects.equals(subCommands[j], SET_POSITION)) {
                         int finalJ1 = j;
@@ -91,14 +91,16 @@ public class TuringInterpreter extends CommandList {
                             }
                             if (Objects.equals(subCommands[j + 2], STORED))
                                 commands.add((state, m) -> m.getObserver().set(!m.getStoredBool()));
-
                         } else {
                             if (Objects.equals(subCommands[j + 1], GET))
                                 commands.add((state, m) -> m.getObserver().set(m.getBool()));
                             if (Objects.equals(subCommands[j + 1], STORED))
                                 commands.add((state, m) -> m.getObserver().set(m.getStoredBool()));
                             if (Objects.equals(subCommands[j + 1], TRUE)) {
-                                commands.add((state, m) -> m.getObserver().set(true));
+                                commands.add((state, m) -> {
+
+                                    m.getObserver().set(true);
+                                });
                             }
                             if (Objects.equals(subCommands[j + 1], FALSE))
                                 commands.add((state, m) -> m.getObserver().set(false));
