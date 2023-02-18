@@ -9,8 +9,10 @@ import java.util.Scanner;
 
 public class RunInterpreter {
     public static void main(String[] args) throws ValueException, FileNotFoundException {
-        String path = "XXX";
-        String name = path+"main.tmi";
+        for(String argument: args){
+            System.out.println(argument);
+        }
+        String name = "main.tmi";
         File program = new File(name);
         Scanner reader = new Scanner(program);
         StringBuilder readString = new StringBuilder();
