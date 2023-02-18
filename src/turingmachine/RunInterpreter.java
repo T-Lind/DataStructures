@@ -9,11 +9,11 @@ import java.util.Scanner;
 
 public class RunInterpreter {
     public static void main(String[] args) throws ValueException, FileNotFoundException {
-        for(String argument: args){
-            System.out.println(argument);
-        }
-        String name = "main.tmi";
-        File program = new File(name);
+        String summedArgs = "";
+        for(String arg: args)
+            summedArgs += arg+" ";
+
+        File program = new File(summedArgs);
         Scanner reader = new Scanner(program);
         StringBuilder readString = new StringBuilder();
         while(reader.hasNextLine()){
