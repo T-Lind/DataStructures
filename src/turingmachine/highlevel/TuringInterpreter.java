@@ -1,4 +1,4 @@
-package turingmachine;
+package turingmachine.highlevel;
 
 import turingmachine.components.Command;
 import turingmachine.components.Stage;
@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class TuringInterpreter extends CommandList {
+    private TuringMachine machine;
 
     public TuringInterpreter(String commandToFollow) throws ValueException {
         Stage currentStage = Stage.NONE;
@@ -16,13 +17,10 @@ public class TuringInterpreter extends CommandList {
 
         String[] lines = commandToFollow.split("\n");
 
-
-        System.out.println(Arrays.toString(lines));
-
         int len = 10;
         int startPos = 0;
         boolean executeAuto = false;
-        TuringMachine machine = new TuringMachine(len, startPos);
+        machine = new TuringMachine(len, startPos);
         for (int i = 0; i < lines.length; i++) {
             System.out.println(i + " " + lines[i]);
             if (Objects.equals(lines[i], BEGIN_INFO))
@@ -36,7 +34,6 @@ public class TuringInterpreter extends CommandList {
             if (Objects.equals(lines[i], END_COMMANDSET))
                 currentStage = Stage.NONE;
             if (Objects.equals(lines[i], RUN)) {
-                System.out.println("run");
                 machine.getObserver().setPosition(startPos);
                 machine.getObserver().runCommand(machine);
             }
@@ -112,6 +109,9 @@ public class TuringInterpreter extends CommandList {
                 }
             }
         } // END LOOP
-        System.out.println(machine);
+    }
+
+    public String toString(){
+        return machine.toString();
     }
 }

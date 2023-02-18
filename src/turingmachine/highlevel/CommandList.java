@@ -1,4 +1,4 @@
-package turingmachine;
+package turingmachine.highlevel;
 
 public class CommandList {
     public final static String BEGIN_INFO = "BEGIN INFO";

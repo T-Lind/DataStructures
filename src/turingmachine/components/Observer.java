@@ -1,6 +1,6 @@
 package turingmachine.components;
 
-import turingmachine.TuringMachine;
+import turingmachine.highlevel.TuringMachine;
 
 import java.util.ArrayList;
 

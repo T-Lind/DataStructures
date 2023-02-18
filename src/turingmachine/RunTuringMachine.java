@@ -1,6 +1,7 @@
 package turingmachine;
 
 import turingmachine.components.ValueException;
+import turingmachine.highlevel.TuringMachine;
 
 public class RunTuringMachine {
     public static void main(String[] args) throws ValueException {
