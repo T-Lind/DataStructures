@@ -5,6 +5,7 @@ import turingmachine.components.Command;
 import turingmachine.components.Stage;
 import java.util.ArrayList;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class TuringInterpreter extends CommandList {
@@ -45,13 +46,16 @@ public class TuringInterpreter extends CommandList {
                 currentStage = Stage.NONE;
                 machine = new TuringMachine(len, startPos);
             }
-            if (Objects.equals(lines[i], BEGIN_COMMANDSET))
+            if (Objects.equals(lines[i], BEGIN_COMMANDSET)) {
                 currentStage = Stage.COMMAND;
+            }
             if (Objects.equals(lines[i], END_COMMANDSET))
                 currentStage = Stage.NONE;
+
             if (Objects.equals(lines[i], RUN)) {
                 machine.getObserver().setPosition(startPos);
                 machine.getObserver().runCommand(machine);
+                System.out.println("Output: "+machine.getObserver()+", Stored: "+machine.getObserver().getItem().get().getInt());
             }
 
             // INFO data:
@@ -79,15 +83,22 @@ public class TuringInterpreter extends CommandList {
                 String number = lines[i].substring(SET_POSITION.length());
                 machine.getObserver().moveRelative(Integer.parseInt(number));
             }
-            if (lines[i].startsWith(SET_STORED) && currentStage == Stage.COMMAND || currentStage == Stage.INFO) {
-                if(Objects.equals(lines[i], GET)){
+            if (lines[i].startsWith(SET_STORED) && (currentStage == Stage.COMMAND || currentStage == Stage.INFO)) {
+                String[] settingTo = lines[i].split(" ");
+                if(Objects.equals(settingTo[1], TRUE)){
+                    machine.setStored(true);
+                }
+                else if(Objects.equals(settingTo[1], FALSE)){
+                    machine.setStored(false);
+                }
+                else if(Objects.equals(settingTo[1], GET)){
                     machine.setStored(machine.getBool());
                 }
-                if(Objects.equals(lines[i], NOT)){
-                    if(Objects.equals(lines[i], GET)){
+                else if(Objects.equals(settingTo[1], NOT)){
+                    if(Objects.equals(settingTo[2], GET)){
                         machine.setStored(!machine.getBool());
                     }
-                    if(Objects.equals(lines[i], STORED)){
+                    if(Objects.equals(settingTo[2], STORED)){
                         machine.setStored(!machine.getStoredBool());
                     }
                 }
@@ -108,7 +119,7 @@ public class TuringInterpreter extends CommandList {
                         commands.add((state, m) -> m.getObserver().runCommand(m));
                     }
                     if (Objects.equals(subCommands[j], PRINT)) {
-                        commands.add((state, m) -> System.out.println(m.getObserver()+", Stored: "+m.getStoredBool()));
+                        commands.add((state, m) -> System.out.println(m.getObserver()+", Stored: "+m.getObserver().getItem().get().getInt()));
                     }
 
                     if(Objects.equals(subCommands[j], SET_STORED.strip())){

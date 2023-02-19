@@ -30,6 +30,9 @@ public class CommandList {
     public final static String NOT = "NOT";
     public final static String EXECUTE = "EXECUTE";
     public final static String PRINT = "PRINT";
+
+    // TODO: Implement
+    public final static String DEBUG_PRINT = "DEBUG PRINT";
     public final static String COMMENT = "//";
     public final static String[] BLOCK_COMMENT = {"/*", "*/"};
 

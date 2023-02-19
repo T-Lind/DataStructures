@@ -22,6 +22,5 @@ public class RunInterpreter {
         }
         reader.close();
         var interpreter = new TuringInterpreter(readString.toString());
-        System.out.println(interpreter);
     }
 }
