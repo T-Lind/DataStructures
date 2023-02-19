@@ -21,6 +21,7 @@ public class TuringInterpreter extends CommandList {
         int startPos = 0;
         boolean executeAuto = false;
         boolean inCommentBlock = false;
+        boolean debugPrint = false;
         machine = new TuringMachine(len, startPos);
         for (int i = 0; i < lines.length; i++) {
             // Check for block comments as well as in line comments
@@ -36,7 +37,9 @@ public class TuringInterpreter extends CommandList {
                 continue;
             if(lines[i].startsWith(COMMENT))
                 continue;
-            System.out.println(i + " " + lines[i]);
+
+            if(debugPrint)
+                System.out.println(i + " " + lines[i]);
 
 
             // Defined stages
@@ -70,6 +73,9 @@ public class TuringInterpreter extends CommandList {
             if (lines[i].startsWith(START_POS) && currentStage == Stage.INFO) {
                 String number = lines[i].substring(START_POS.length());
                 startPos = Integer.parseInt(number);
+            }
+            if (lines[i].startsWith(DEBUG_PRINT) && currentStage == Stage.INFO) {
+                debugPrint = true;
             }
 
             // TODO: Implement moving between tapes in regular / command movement, also storage in regular / command
@@ -113,12 +119,13 @@ public class TuringInterpreter extends CommandList {
 
                 // Loop through every provided subcommand using regex
                 for (int j = 0; j < subCommands.length; j++) {
-                    System.out.println("    " + j + " " + subCommands[j]);
+                    if(debugPrint)
+                        System.out.println("    " + j + " " + subCommands[j]);
 
                     if (Objects.equals(subCommands[j], EXECUTE)) {
                         commands.add((state, m) -> m.getObserver().runCommand(m));
                     }
-                    if (Objects.equals(subCommands[j], PRINT)) {
+                    if (Objects.equals(subCommands[j], PRINT) || debugPrint) {
                         commands.add((state, m) -> System.out.println(m.getObserver()+", Stored: "+m.getObserver().getItem().get().getInt()));
                     }
 
