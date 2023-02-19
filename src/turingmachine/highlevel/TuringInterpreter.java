@@ -3,11 +3,8 @@ package turingmachine.highlevel;
 import org.jetbrains.annotations.NotNull;
 import turingmachine.components.Command;
 import turingmachine.components.Stage;
-import turingmachine.components.ValueException;
-
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Objects;
 
 public class TuringInterpreter extends CommandList {
@@ -118,12 +115,10 @@ public class TuringInterpreter extends CommandList {
                         if(Objects.equals(subCommands[j+1], GET))
                             commands.add(((state, m) -> m.setStored(m.getBool())));
                         if(Objects.equals(subCommands[j+1], NOT)){
-                            System.out.println("not");
                             if(Objects.equals(subCommands[j+2], GET))
                                 commands.add(((state, m) -> m.setStored(!m.getBool())));
-                            if(Objects.equals(subCommands[j+2], STORED))
+                            if(Objects.equals(subCommands[j+2], STORED.strip()))
                                 commands.add(((state, m) -> m.setStored(!m.getStoredBool())));
-
                         }
                     }
 
@@ -148,10 +143,7 @@ public class TuringInterpreter extends CommandList {
                             if (Objects.equals(subCommands[j + 1], STORED.strip()))
                                 commands.add((state, m) -> m.getObserver().set(m.getStoredBool()));
                             if (Objects.equals(subCommands[j + 1], TRUE)) {
-                                commands.add((state, m) -> {
-
-                                    m.getObserver().set(true);
-                                });
+                                commands.add((state, m) -> m.getObserver().set(true));
                             }
                             if (Objects.equals(subCommands[j + 1], FALSE))
                                 commands.add((state, m) -> m.getObserver().set(false));
@@ -164,9 +156,7 @@ public class TuringInterpreter extends CommandList {
                     // On the last command, add an execute automatically if provided and set the commands to the item
                     if (j == subCommands.length - 1) {
                         if (executeAuto) {
-                            commands.add((state, m) -> {
-                                m.getObserver().runCommand(m);
-                            });
+                            commands.add((state, m) -> m.getObserver().runCommand(m));
                             machine.getObserver().setCommands(commands);
                             break;
                         }
