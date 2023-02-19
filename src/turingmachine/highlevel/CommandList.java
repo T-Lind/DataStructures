@@ -23,12 +23,13 @@ public class CommandList {
     public final static String CMD = "CMD ";
     public final static String STORED = "STORED ";
     public final static String SET_STORED = "SET::STORED ";
-    public final static String SET = "SET";
+    public final static String SET = "SET::ITEM";
     public final static String TRUE = "TRUE";
     public final static String FALSE = "FALSE";
     public final static String GET = "GET";
     public final static String NOT = "NOT";
     public final static String EXECUTE = "EXECUTE";
+    public final static String PRINT = "PRINT";
     public final static String COMMENT = "//";
     public final static String[] BLOCK_COMMENT = {"/*", "*/"};
 

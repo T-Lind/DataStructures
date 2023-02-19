@@ -10,21 +10,25 @@ public class TuringMachine {
 
     public TuringMachine(int len){
         this(len, 0);
+        stored = new Digit(0);
     }
 
     public TuringMachine(int len, int startPos){
         tape = new Tape(len);
         observer = new Observer(startPos, tape);
+        stored = new Digit(0);
     }
 
 
     public TuringMachine(int startPos, int... ints)  {
         tape = new Tape(ints);
         observer = new Observer(startPos, tape);
+        stored = new Digit(0);
     }
 
     public TuringMachine(int... ints)  {
         this(0, ints);
+        stored = new Digit(0);
     }
 
     public Observer getObserver(){

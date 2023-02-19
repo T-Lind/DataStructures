@@ -5,6 +5,7 @@ import turingmachine.components.Command;
 import turingmachine.components.Stage;
 import turingmachine.components.ValueException;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -109,12 +110,20 @@ public class TuringInterpreter extends CommandList {
                     if (Objects.equals(subCommands[j], EXECUTE)) {
                         commands.add((state, m) -> m.getObserver().runCommand(m));
                     }
+                    if (Objects.equals(subCommands[j], PRINT)) {
+                        commands.add((state, m) -> System.out.println(m.getObserver()+", Stored: "+m.getStoredBool()));
+                    }
 
-                    if(Objects.equals(subCommands[j], SET_STORED)){
+                    if(Objects.equals(subCommands[j], SET_STORED.strip())){
                         if(Objects.equals(subCommands[j+1], GET))
                             commands.add(((state, m) -> m.setStored(m.getBool())));
                         if(Objects.equals(subCommands[j+1], NOT)){
-//                            if(Objects.equals())
+                            System.out.println("not");
+                            if(Objects.equals(subCommands[j+2], GET))
+                                commands.add(((state, m) -> m.setStored(!m.getBool())));
+                            if(Objects.equals(subCommands[j+2], STORED))
+                                commands.add(((state, m) -> m.setStored(!m.getStoredBool())));
+
                         }
                     }
 
@@ -131,12 +140,12 @@ public class TuringInterpreter extends CommandList {
                             if (Objects.equals(subCommands[j + 2], GET)) {
                                 commands.add((state, m) -> m.getObserver().set(!m.getBool()));
                             }
-                            if (Objects.equals(subCommands[j + 2], STORED))
+                            if (Objects.equals(subCommands[j + 2], STORED.strip()))
                                 commands.add((state, m) -> m.getObserver().set(!m.getStoredBool()));
                         } else {
                             if (Objects.equals(subCommands[j + 1], GET))
                                 commands.add((state, m) -> m.getObserver().set(m.getBool()));
-                            if (Objects.equals(subCommands[j + 1], STORED))
+                            if (Objects.equals(subCommands[j + 1], STORED.strip()))
                                 commands.add((state, m) -> m.getObserver().set(m.getStoredBool()));
                             if (Objects.equals(subCommands[j + 1], TRUE)) {
                                 commands.add((state, m) -> {
