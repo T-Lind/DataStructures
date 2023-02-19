@@ -17,7 +17,7 @@ public class Observer {
         this.tape = tape;
     }
 
-    public void runCommand(TuringMachine machine) throws ValueException {
+    public void runCommand(TuringMachine machine)  {
         tape.getItem(position).runCommand(machine);
     }
 

@@ -11,13 +11,13 @@ public class Tape {
             data[i] = new Item(false);
     }
 
-    public Tape(int... ints) throws ValueException {
+    public Tape(int... ints) {
         len = ints.length;
         data = new Item[len];
         for(int i=0;i<len;i++)
             data[i] = new Item(ints[i]);
     }
-    public Tape(boolean... booleans) throws ValueException {
+    public Tape(boolean... booleans)  {
         len = booleans.length;
         data = new Item[len];
         for(int i=0;i<len;i++)

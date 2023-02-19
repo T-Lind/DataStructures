@@ -13,7 +13,7 @@ public class Item {
         this.state = new Digit(state);
     }
 
-    public Item(int state) throws ValueException {
+    public Item(int state)  {
         this.state = new Digit(state);
         commands = new ArrayList<>();
     }
@@ -37,7 +37,7 @@ public class Item {
         this.commands = commands;
     }
 
-    public void runCommand(TuringMachine machine) throws ValueException {
+    public void runCommand(TuringMachine machine)  {
         if(commands != null && !hasRun) {
             hasRun = true;
             for (Command command : commands) {
