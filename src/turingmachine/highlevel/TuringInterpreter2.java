@@ -3,6 +3,7 @@ package turingmachine.highlevel;
 import org.jetbrains.annotations.NotNull;
 import turingmachine.components.Command;
 import turingmachine.components.Stage;
+import turingmachine.components.SyntaxException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +15,8 @@ public class TuringInterpreter2 extends CommandList{
     private HashMap<String, Boolean> runtimeData;
 
 
-    public TuringInterpreter2(@NotNull String commandToFollow) {
+    public TuringInterpreter2(@NotNull String commandToFollow) throws SyntaxException {
+        checkParens(commandToFollow);
         runtimeData = new HashMap<>();
 
         String[] lines = removeComments(commandToFollow).split(";");
@@ -89,8 +91,6 @@ public class TuringInterpreter2 extends CommandList{
                 String raw = lines[i].substring(CMD.length());
                 raw = raw.replaceAll("\n", " ");
                 raw = raw.replaceAll("    ", " ");
-
-                System.out.println(raw);
 
                 String[] sc = raw.split(" ");
                 ArrayList<String> subCommands = new ArrayList<>(Arrays.asList(sc));
@@ -170,7 +170,7 @@ public class TuringInterpreter2 extends CommandList{
         }
     }
 
-    private static String removeComments(String input){
+    private static String removeComments(@NotNull String input){
         StringBuilder retStr = new StringBuilder();
         boolean inCommentBlock = false;
         String[] lines = input.split("\n");
@@ -190,5 +190,21 @@ public class TuringInterpreter2 extends CommandList{
             }
         }
         return retStr.toString();
+    }
+
+    private static void checkParens(@NotNull String input) throws SyntaxException {
+        int parenCounter = 0;
+        String[] characters = input.split("");
+        for(String c: characters){
+            if(Objects.equals(c, "("))
+                parenCounter++;
+            if(Objects.equals(c, ")"))
+                parenCounter--;
+            if(parenCounter < 0){
+                throw new SyntaxException("Parenthesis not matched in input code!");
+            }
+        }
+        if(parenCounter != 0)
+            throw new SyntaxException("Parenthesis not matched in input code!");
     }
 }

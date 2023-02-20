@@ -1,6 +1,7 @@
 package turingmachine;
 
 import org.jetbrains.annotations.NotNull;
+import turingmachine.components.SyntaxException;
 import turingmachine.components.ValueException;
 import turingmachine.highlevel.TuringInterpreter;
 import turingmachine.highlevel.TuringInterpreter2;
@@ -10,7 +11,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class RunInterpreter2 {
-    public static void main(@NotNull String[] args) throws FileNotFoundException {
+    public static void main(@NotNull String[] args) throws FileNotFoundException, SyntaxException {
         String summedArgs = "";
         for(String arg: args)
             summedArgs += arg+" ";

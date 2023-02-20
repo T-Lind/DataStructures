@@ -22,12 +22,12 @@ public class CommandList {
     public final static String MOVE_RELATIVE = "MOVE ";
     public final static String SET_POSITION = "SET POSITION ";
     public final static String CMD = "CMD ";
-    public final static String STORED = "GET::STORED ";
-    public final static String SET_STORED = "SET::STORED ";
-    public final static String SET = "SET::ITEM";
+    public final static String STORED = "GET(STORED) ";
+    public final static String SET_STORED = "SET(STORED) ";
+    public final static String SET = "SET(ITEM)";
     public final static String TRUE = "TRUE";
     public final static String FALSE = "FALSE";
-    public final static String GET = "GET::ITEM";
+    public final static String GET = "GET(ITEM)";
     public final static String NOT = "NOT";
     public final static String EXECUTE = "EXECUTE";
 
