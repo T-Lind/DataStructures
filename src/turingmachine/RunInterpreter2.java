@@ -9,8 +9,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class RunInterpreter {
-    public static void main(@NotNull String[] args) throws ValueException, FileNotFoundException {
+public class RunInterpreter2 {
+    public static void main(@NotNull String[] args) throws FileNotFoundException {
         String summedArgs = "";
         for(String arg: args)
             summedArgs += arg+" ";
@@ -22,6 +22,6 @@ public class RunInterpreter {
             readString.append(reader.nextLine()).append("\n");
         }
         reader.close();
-        var interpreter = new TuringInterpreter(readString.toString());
+        var interpreter = new TuringInterpreter2(readString.toString());
     }
 }

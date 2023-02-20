@@ -47,6 +47,9 @@ public class TuringMachine {
     public boolean getStoredBool(){
         return stored.getBoolean();
     }
+    public int getStoredInt(){
+        return stored.getInt();
+    }
 
     public Digit set(int idx, Digit value){
         return tape.set(idx, value);

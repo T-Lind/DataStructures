@@ -3,8 +3,6 @@ package turingmachine.highlevel;
 import org.jetbrains.annotations.NotNull;
 import turingmachine.components.Command;
 import turingmachine.components.Stage;
-
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class TuringInterpreter extends CommandList {
@@ -60,7 +58,7 @@ public class TuringInterpreter extends CommandList {
                 currentStage = Stage.RUN;
                 machine.getObserver().setPosition(startPos);
                 machine.getObserver().runCommand(machine);
-                System.out.println("Output: " + machine.getObserver() + ", Stored: " + machine.getObserver().getItem().get().getInt());
+                System.out.println("Output: " + machine.getObserver() + ", Stored: " + machine.getStoredInt());
             }
 
             // INFO data:
@@ -143,7 +141,7 @@ public class TuringInterpreter extends CommandList {
                             commands.add((state, m) -> m.getObserver().runCommand(m));
                         }
                         if (Objects.equals(subCommands.get(j), PRINT) || runtimeData.get("debugPrint")) {
-                            commands.add((state, m) -> System.out.println(m.getObserver() + ", Stored: " + m.getObserver().getItem().get().getInt()));
+                            commands.add((state, m) -> System.out.println(m.getObserver() + ", Stored: " + m.getStoredInt()));
                         }
 
                         if (Objects.equals(subCommands.get(j), SET_STORED.strip())) {

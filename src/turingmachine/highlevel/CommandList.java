@@ -8,6 +8,7 @@ public class CommandList {
     public final static String BEGIN_COMMANDSET = "BEGIN COMMANDS";
     public final static String END_COMMANDSET = "END COMMANDS";
     public final static String RUN = "RUN";
+    public final static String GENERATE_MACHINE = "GENERATE MACHINE";
 
     // Individual commands
 
