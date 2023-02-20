@@ -5,9 +5,10 @@ import turingmachine.components.Command;
 import turingmachine.components.Stage;
 import java.util.*;
 
+@Deprecated
 public class TuringInterpreter extends CommandList {
     private TuringMachine machine;
-    private HashMap<String, Boolean> runtimeData;
+    private final HashMap<String, Boolean> runtimeData;
 
     public TuringInterpreter(@NotNull String commandToFollow) {
         Stage currentStage = Stage.NONE;
