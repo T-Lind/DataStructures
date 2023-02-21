@@ -5,6 +5,7 @@ import turingmachine.highlevel.CommandList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class TuringInterpreter extends CommandList {
@@ -41,39 +42,42 @@ public class TuringInterpreter extends CommandList {
                 }
             } else if (lines[i].startsWith(PRINT)) {
                 machine.printTape();
-            } else if (lines[i].startsWith(RUN)){
+            } else if (lines[i].startsWith(RUN)) {
                 machine.run();
             } else if (lines[i].startsWith(CMD)) {
                 String[] insides = getInsideDelimiters(lines[i]).strip().split(" ");
                 int page = 0;
                 int awareness = 0;
-                boolean[] setStates = {false, false};
-                for (String inside : insides) {
-                    if (setStates[0] && setStates[1]) {
-                        machine.beginCommand(page, awareness);
-                    }
-
-                    if (inside.equals(" "))
-                        continue;
+                for(int k=0;k<2;k++){
+                    var inside = insides[k];
                     if (inside.startsWith(PAGE)) {
                         page = onlyKeepInt(inside);
-                        setStates[0] = true;
                     } else if (inside.startsWith(AWARENESS)) {
                         awareness = onlyKeepInt(inside);
-                        setStates[1] = true;
-                    } else if (inside.startsWith(FUTURE_STOP)) {
-                        machine.addCommand(page, awareness, (m) -> m.stop());
-                    } else if (inside.startsWith(FUTURE_SETTAPE)) {
-                        final int value = onlyKeepInt(getInsideDelimiters(inside));
-                        machine.addCommand(page, awareness, (m) -> m.setTape(value));
-                    } else if (inside.startsWith(FUTURE_MOVE)) {
-                        final int value = onlyKeepInt(getInsideDelimiters(inside));
-                        machine.addCommand(page, awareness, (m) -> m.move(value));
-                    } else if (inside.startsWith(FUTURE_GOTOPAGE)) {
-                        final int value = onlyKeepInt(getInsideDelimiters(inside));
-                        machine.addCommand(page, awareness, (m) -> m.goToPage(value));
                     }
                 }
+                machine.beginCommand(page, awareness);
+                for (int k=2;k<insides.length;k++) {
+                    var inside = insides[k];
+                    if (inside.equals(" "))
+                        continue;
+                    if (inside.startsWith(FUTURE_STOP)) {
+                        machine.addCommand(page, awareness, (m) -> {
+                            m.printTape();
+                            m.stop();
+                        }, false);
+                    } else if (inside.startsWith(FUTURE_SETTAPE)) {
+                        final int value = onlyKeepInt(getInsideDelimiters(inside));
+                        machine.addCommand(page, awareness, (m) -> m.setTape(value), false);
+                    } else if (inside.startsWith(FUTURE_MOVE)) {
+                        final int value = onlyKeepInt(getInsideDelimiters(inside));
+                        machine.addCommand(page, awareness, (m) -> m.move(value), false);
+                    } else if (inside.startsWith(FUTURE_GOTOPAGE)) {
+                        final int value = onlyKeepInt(getInsideDelimiters(inside));
+                        machine.addCommand(page, awareness, (m) -> m.goToPage(value), false);
+                    }
+                }
+//                System.out.println(machine.getCommands(page, awareness).size());
             }
         }
     }

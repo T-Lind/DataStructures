@@ -17,9 +17,10 @@ machine::setCommand(
 );
 machine::setCommand(
     AWARENESS=2, PAGE=1,
-        future::setTape(8)
+        future::setTape(0)
         future::move(-4)
         future::goToPage(0)
 );
 
 machine::run();
+machine::printTape();

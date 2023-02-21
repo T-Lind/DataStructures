@@ -61,13 +61,13 @@ public class TuringMachine extends CommandList {
     public void addCommand(Integer page, Integer awareness, Command command) {
         addCommand(page, awareness, command, true);
     }
-    public void addCommand(Integer page, Integer awareness, Command command, boolean autoEnd) {
+    public void addCommand(Integer page, Integer awareness, Command command, boolean autoStart) {
         if (page >= pages.size())
             pages.add(new HashMap<>());
         if (pages.get(page) == null || pages.get(page).get(awareness) == null){
             pages.get(page).put(awareness, new ArrayList<>());
         }
-        if(autoEnd)
+        if(autoStart)
             pages.get(page).get(awareness).add((m -> m.setAwareness(m.getTape())));
         pages.get(page).get(awareness).add(command);
     }
@@ -77,13 +77,21 @@ public class TuringMachine extends CommandList {
         if (pages.get(page) == null || pages.get(page).get(awareness) == null){
             pages.get(page).put(awareness, new ArrayList<>());
         }
-        pages.get(page).get(awareness).add((m -> m.setAwareness(m.getTape())));
+        pages.get(page).get(awareness).add((m -> {
+            m.setAwareness(m.getTape());
+            m.printTape();
+        }));
+    }
+
+    public ArrayList<Command> getCommands(int page, int awareness){
+        return pages.get(page).get(awareness);
     }
 
     public void run() {
         while (page != STOP) {
             for(Command cmd: pages.get(page).get(awareness))
-                cmd.invoke(this);
+                if(page != STOP)
+                    cmd.invoke(this);
         }
     }
 
