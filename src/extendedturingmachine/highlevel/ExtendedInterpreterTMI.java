@@ -9,13 +9,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class InterpreterTMI extends ExtendedCommandList {
+public class ExtendedInterpreterTMI extends ExtendedCommandList {
     private ExtendedTuringMachine machine;
     private final HashMap<String, Boolean> runtimeData;
 
 
 
-    public InterpreterTMI(@NotNull String commandToFollow) throws SyntaxException {
+    public ExtendedInterpreterTMI(@NotNull String commandToFollow) throws SyntaxException {
         checkParens(commandToFollow);
         runtimeData = new HashMap<>();
 

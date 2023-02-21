@@ -19,11 +19,11 @@ public class TuringMachine extends CommandList {
     private Integer position;
 
 
-    public TuringMachine() {
+    public TuringMachine(int startPos) {
         pages = new ArrayList<>();
-        awareness = NONE;
+        awareness = 0;
         page = 0;
-        position = 0;
+        position = startPos;
         tape = new HashMap<>();
     }
 
@@ -32,6 +32,8 @@ public class TuringMachine extends CommandList {
         awareness = 0;
         page = 0;
         tape = new HashMap<>();
+        for (int i = 0; i < defaultValues.length; i++)
+            tape.put(i, defaultValues[i]);
         position = 0;
     }
 
@@ -47,7 +49,7 @@ public class TuringMachine extends CommandList {
 
     public TuringMachine(Integer startPos, Integer numItemsTape) {
         pages = new ArrayList<>();
-        awareness = NONE;
+        awareness = 0;
         page = 0;
         tape = new HashMap<>();
         for (Integer i = 0; i < numItemsTape; i++)
@@ -57,13 +59,25 @@ public class TuringMachine extends CommandList {
 
 
     public void addCommand(Integer page, Integer awareness, Command command) {
+        addCommand(page, awareness, command, true);
+    }
+    public void addCommand(Integer page, Integer awareness, Command command, boolean autoEnd) {
+        if (page >= pages.size())
+            pages.add(new HashMap<>());
+        if (pages.get(page) == null || pages.get(page).get(awareness) == null){
+            pages.get(page).put(awareness, new ArrayList<>());
+        }
+        if(autoEnd)
+            pages.get(page).get(awareness).add((m -> m.setAwareness(m.getTape())));
+        pages.get(page).get(awareness).add(command);
+    }
+    public void beginCommand(Integer page, Integer awareness){
         if (page >= pages.size())
             pages.add(new HashMap<>());
         if (pages.get(page) == null || pages.get(page).get(awareness) == null){
             pages.get(page).put(awareness, new ArrayList<>());
         }
         pages.get(page).get(awareness).add((m -> m.setAwareness(m.getTape())));
-        pages.get(page).get(awareness).add(command);
     }
 
     public void run() {
@@ -120,6 +134,10 @@ public class TuringMachine extends CommandList {
 
     public void stop(){
         goToPage(STOP);
+    }
+
+    public void setPosition(int position){
+        this.position = position;
     }
 
     private static Integer removeNull(Integer input){

@@ -1,14 +1,14 @@
 package extendedturingmachine;
 
 import org.jetbrains.annotations.NotNull;
-import extendedturingmachine.highlevel.TuringInterpreter;
+import extendedturingmachine.highlevel.OldTuringInterpreter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 @Deprecated
-public class RunInterpreter {
+public class oldRunInterpreter {
     public static void main(@NotNull String[] args) throws FileNotFoundException {
         StringBuilder summedArgs = new StringBuilder();
         for(String arg: args)
@@ -21,6 +21,6 @@ public class RunInterpreter {
             readString.append(reader.nextLine()).append("\n");
         }
         reader.close();
-        new TuringInterpreter(readString.toString());
+        new OldTuringInterpreter(readString.toString());
     }
 }

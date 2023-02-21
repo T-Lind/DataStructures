@@ -6,11 +6,11 @@ import extendedturingmachine.components.Stage;
 import java.util.*;
 
 @Deprecated
-public class TuringInterpreter extends ExtendedCommandList {
+public class OldTuringInterpreter extends ExtendedCommandList {
     private ExtendedTuringMachine machine;
     private final HashMap<String, Boolean> runtimeData;
 
-    public TuringInterpreter(@NotNull String commandToFollow) {
+    public OldTuringInterpreter(@NotNull String commandToFollow) {
         Stage currentStage = Stage.NONE;
         runtimeData = new HashMap<>();
         String[] lines = commandToFollow.split("\n");

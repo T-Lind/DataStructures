@@ -1,0 +1,25 @@
+machine::setValues(2 1 1 1);
+machine::setPosition(4);
+
+machine::generate();
+
+machine::printTape();
+machine::setCommand(
+    AWARENESS=0, PAGE=0,
+        future::setTape(3)
+        future::move(1)
+        future::goToPage(1)
+);
+machine::setCommand(
+    AWARENESS=1, PAGE=0,
+        future::setTape(8)
+        future::stop()
+);
+machine::setCommand(
+    AWARENESS=2, PAGE=1,
+        future::setTape(8)
+        future::move(-4)
+        future::goToPage(0)
+);
+
+machine::run();
