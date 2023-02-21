@@ -2,7 +2,7 @@ package turingmachine.components;
 
 public class Tape {
     private final int len;
-    private Item[] data;
+    private final Item[] data;
 
     public Tape(int len){
         this.len = len;
@@ -23,7 +23,6 @@ public class Tape {
         for(int i=0;i<len;i++)
             data[i] = new Item(booleans[i]);
     }
-
     public Digit set(int idx, Digit newState){
         return data[idx].set(newState);
     }

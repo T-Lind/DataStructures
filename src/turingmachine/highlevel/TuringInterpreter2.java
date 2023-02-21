@@ -2,7 +2,6 @@ package turingmachine.highlevel;
 
 import org.jetbrains.annotations.NotNull;
 import turingmachine.components.Command;
-import turingmachine.components.Stage;
 import turingmachine.components.SyntaxException;
 
 import java.util.ArrayList;
@@ -12,7 +11,8 @@ import java.util.Objects;
 
 public class TuringInterpreter2 extends CommandList {
     private TuringMachine machine;
-    private HashMap<String, Boolean> runtimeData;
+    private final HashMap<String, Boolean> runtimeData;
+
 
 
     public TuringInterpreter2(@NotNull String commandToFollow) throws SyntaxException {
@@ -24,17 +24,25 @@ public class TuringInterpreter2 extends CommandList {
         int startPos = 0;
         // Starting runtime data
         runtimeData.put("executeAuto", false);
-
         runtimeData.put("debugPrint", false);
 
-//        machine = new TuringMachine(len, startPos);
+        ArrayList<Boolean> initTapeBools = new ArrayList<>();
 
         for (int i = 0; i < lines.length; i++) {
             if (runtimeData.get("debugPrint"))
                 System.out.println(i + " " + lines[i]);
 
             if (Objects.equals(lines[i], GENERATE_MACHINE)) {
-                machine = new TuringMachine(len, startPos);
+                if(initTapeBools.size() == 0)
+                    machine = new TuringMachine(len, startPos);
+                else{
+                    final boolean[] initValues = new boolean[initTapeBools.size()];
+                    for(int k=0;k<initTapeBools.size();k++)
+                        initValues[k] = initTapeBools.get(k);
+
+                    machine = new TuringMachine(startPos, initValues);
+
+                }
             }
             if (lines[i].startsWith(SIZE)) {
                 String number = lines[i].substring(SIZE.length());
@@ -48,15 +56,9 @@ public class TuringInterpreter2 extends CommandList {
                 runtimeData.replace("debugPrint", true);
             }
             if (lines[i].startsWith(INIT_TAPE)) {
-                String[] strValues = lines[i].substring(i).split(" ");
-                boolean[] boolValues = new boolean[strValues.length];
-                for(int k=0;k<strValues.length;k++){
-                    // TODO: implement setting the tape to init values in info stage
-//                    tape. strValues[k].equals("1");
+                for (String strValue : lines[i].substring(INIT_TAPE.length()).split(" ")) {
+                    initTapeBools.add(strValue.equals("1"));
                 }
-
-
-                runtimeData.replace("debugPrint", true);
             }
 
             if (Objects.equals(lines[i], EXECUTE_AUTO)) {

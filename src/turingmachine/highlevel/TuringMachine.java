@@ -3,8 +3,8 @@ package turingmachine.highlevel;
 import turingmachine.components.*;
 
 public class TuringMachine {
-    private Tape tape;
-    private Observer observer;
+    private final Tape tape;
+    private final Observer observer;
 
     private Digit stored;
 
@@ -30,6 +30,12 @@ public class TuringMachine {
         this(0, ints);
         stored = new Digit(0);
     }
+    public TuringMachine(int startPos, boolean... bools)  {
+        tape = new Tape(bools);
+        observer = new Observer(startPos, tape);
+        stored = new Digit(0);
+    }
+
 
     public Observer getObserver(){
         return observer;
