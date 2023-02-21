@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class TuringInterpreter2 extends CommandList{
+public class TuringInterpreter2 extends CommandList {
     private TuringMachine machine;
     private HashMap<String, Boolean> runtimeData;
 
@@ -29,14 +29,14 @@ public class TuringInterpreter2 extends CommandList{
 
 //        machine = new TuringMachine(len, startPos);
 
-        for(int i=0;i<lines.length; i++){
+        for (int i = 0; i < lines.length; i++) {
             if (runtimeData.get("debugPrint"))
                 System.out.println(i + " " + lines[i]);
 
-            if(Objects.equals(lines[i], GENERATE_MACHINE)){
+            if (Objects.equals(lines[i], GENERATE_MACHINE)) {
                 machine = new TuringMachine(len, startPos);
             }
-            if(lines[i].startsWith(SIZE)){
+            if (lines[i].startsWith(SIZE)) {
                 String number = lines[i].substring(SIZE.length());
                 len = Integer.parseInt(number);
             }
@@ -139,10 +139,24 @@ public class TuringInterpreter2 extends CommandList{
                                 commands.add((state, m) -> m.getObserver().set(!m.getStoredBool()));
                         } else {
                             if (Objects.equals(subCommands.get(j + 1), GET)) {
-                                commands.add((state, m) -> m.getObserver().set(m.getBool()));
+                                if (isComparison(subCommands.get(j + 2))) {
+                                    if (Objects.equals(subCommands.get(j + 3), STORED.strip())) {
+                                        String comparison = subCommands.get(j + 2);
+                                        commands.add(((state, m) -> m.getObserver().set(performComparison(m.getBool(), m.getStoredBool(), comparison))));
+                                    }
+                                } else {
+                                    commands.add((state, m) -> m.getObserver().set(m.getBool()));
+                                }
                             }
                             if (Objects.equals(subCommands.get(j + 1), STORED.strip())) {
-                                commands.add((state, m) -> m.getObserver().set(m.getStoredBool()));
+                                if (isComparison(subCommands.get(j + 2))) {
+                                    if (Objects.equals(subCommands.get(j + 3), GET)) {
+                                        String comparison = subCommands.get(j + 2);
+                                        commands.add(((state, m) -> m.getObserver().set(performComparison(m.getBool(), m.getStoredBool(), comparison))));
+                                    }
+                                } else {
+                                    commands.add((state, m) -> m.getObserver().set(m.getStoredBool()));
+                                }
                             }
                             if (Objects.equals(subCommands.get(j + 1), TRUE)) {
                                 commands.add((state, m) -> m.getObserver().set(true));
@@ -170,22 +184,22 @@ public class TuringInterpreter2 extends CommandList{
         }
     }
 
-    private static String removeComments(@NotNull String input){
+    private static String removeComments(@NotNull String input) {
         StringBuilder retStr = new StringBuilder();
         boolean inCommentBlock = false;
         String[] lines = input.split("\n");
-        for(String line: lines){
-            if(line.startsWith(COMMENT))
+        for (String line : lines) {
+            if (line.startsWith(COMMENT))
                 continue;
-            if(line.startsWith(BLOCK_COMMENT[0])){
+            if (line.startsWith(BLOCK_COMMENT[0])) {
                 inCommentBlock = true;
                 continue;
             }
-            if(line.startsWith(BLOCK_COMMENT[1])){
+            if (line.startsWith(BLOCK_COMMENT[1])) {
                 inCommentBlock = false;
                 continue;
             }
-            if(!inCommentBlock){
+            if (!inCommentBlock) {
                 retStr.append(line);
             }
         }
@@ -195,16 +209,37 @@ public class TuringInterpreter2 extends CommandList{
     private static void checkParens(@NotNull String input) throws SyntaxException {
         int parenCounter = 0;
         String[] characters = input.split("");
-        for(String c: characters){
-            if(Objects.equals(c, "("))
+        for (String c : characters) {
+            if (Objects.equals(c, "("))
                 parenCounter++;
-            if(Objects.equals(c, ")"))
+            if (Objects.equals(c, ")"))
                 parenCounter--;
-            if(parenCounter < 0){
+            if (parenCounter < 0) {
                 throw new SyntaxException("Parenthesis not matched in input code!");
             }
         }
-        if(parenCounter != 0)
+        if (parenCounter != 0)
             throw new SyntaxException("Parenthesis not matched in input code!");
+    }
+
+    private static boolean isComparison(String subCommand) {
+        for (String s : COMPARISONS) {
+            if (s.equals(subCommand))
+                return true;
+        }
+        return false;
+    }
+
+    private static boolean performComparison(boolean a, boolean b, String operation) {
+        if (operation.equals(COMPARISONS[0]))
+            return a && b;
+        else if (operation.equals(COMPARISONS[1]))
+            return !(a && b);
+        else if (operation.equals(COMPARISONS[2]))
+            return a || b;
+        else if (operation.equals(COMPARISONS[3])) {
+            return a ^ b;
+        }
+        throw new RuntimeException("Improper operation name specified to performComparison.");
     }
 }

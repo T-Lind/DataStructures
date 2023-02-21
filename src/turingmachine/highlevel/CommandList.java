@@ -30,7 +30,8 @@ public class CommandList {
     public final static String GET = "GET(ITEM)";
     public final static String NOT = "NOT";
     public final static String EXECUTE = "EXECUTE";
-
+    public final static String IF = "IF";
+    public final static String[] COMPARISONS = {"AND", "NAND", "OR", "XOR"};
     public final static String PRINT = "PRINT";
     public final static String DEBUG_PRINT = "DEBUG PRINT";
     public final static String COMMENT = "//";

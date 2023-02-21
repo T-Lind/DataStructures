@@ -12,7 +12,7 @@ GENERATE MACHINE;
 SET(STORED) TRUE;
 
 // Demonstrates that you can use multiple lines now
-CMD SET(ITEM) GET(STORED)
+CMD SET(ITEM) GET(STORED) XOR GET(ITEM)
     SET(STORED) NOT GET(STORED)
     MOVE 1
     PRINT;
