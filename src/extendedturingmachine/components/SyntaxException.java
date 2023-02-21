@@ -1,4 +1,4 @@
-package turingmachine.components;
+package extendedturingmachine.components;
 
 public class SyntaxException extends Exception {
     public SyntaxException(String message) {

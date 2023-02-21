@@ -1,21 +1,21 @@
-package turingmachine.highlevel;
+package extendedturingmachine.highlevel;
 
 import org.jetbrains.annotations.NotNull;
-import turingmachine.components.Command;
-import turingmachine.components.SyntaxException;
+import extendedturingmachine.components.ExtendedCommand;
+import extendedturingmachine.components.SyntaxException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class TuringInterpreter2 extends CommandList {
-    private TuringMachine machine;
+public class InterpreterTMI extends ExtendedCommandList {
+    private ExtendedTuringMachine machine;
     private final HashMap<String, Boolean> runtimeData;
 
 
 
-    public TuringInterpreter2(@NotNull String commandToFollow) throws SyntaxException {
+    public InterpreterTMI(@NotNull String commandToFollow) throws SyntaxException {
         checkParens(commandToFollow);
         runtimeData = new HashMap<>();
 
@@ -34,13 +34,13 @@ public class TuringInterpreter2 extends CommandList {
 
             if (Objects.equals(lines[i], GENERATE_MACHINE)) {
                 if(initTapeBools.size() == 0)
-                    machine = new TuringMachine(len, startPos);
+                    machine = new ExtendedTuringMachine(len, startPos);
                 else{
                     final boolean[] initValues = new boolean[initTapeBools.size()];
                     for(int k=0;k<initTapeBools.size();k++)
                         initValues[k] = initTapeBools.get(k);
 
-                    machine = new TuringMachine(startPos, initValues);
+                    machine = new ExtendedTuringMachine(startPos, initValues);
 
                 }
             }
@@ -110,7 +110,7 @@ public class TuringInterpreter2 extends CommandList {
                 ArrayList<String> subCommands = new ArrayList<>(Arrays.asList(sc));
 
 
-                ArrayList<Command> commands = new ArrayList<>();
+                ArrayList<ExtendedCommand> commands = new ArrayList<>();
 
                 for (int j = 0; j < subCommands.size(); j++) {
                     if (runtimeData.get("debugPrint"))

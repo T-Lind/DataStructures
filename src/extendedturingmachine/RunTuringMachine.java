@@ -1,11 +1,11 @@
-package turingmachine;
+package extendedturingmachine;
 
-import turingmachine.components.ValueException;
-import turingmachine.highlevel.TuringMachine;
+import extendedturingmachine.components.ValueException;
+import extendedturingmachine.highlevel.ExtendedTuringMachine;
 
 public class RunTuringMachine {
     public static void main(String[] args) throws ValueException {
-        var machine = new TuringMachine(0, new int[]{0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1});
+        var machine = new ExtendedTuringMachine(0, new int[]{0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1});
         var observer = machine.getObserver();
         while (!observer.atTail()) {
             observer.addCommand((state, m) -> {

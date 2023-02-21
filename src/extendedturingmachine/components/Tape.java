@@ -1,4 +1,4 @@
-package turingmachine.components;
+package extendedturingmachine.components;
 
 public class Tape {
     private final int len;

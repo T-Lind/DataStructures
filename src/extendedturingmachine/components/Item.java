@@ -1,12 +1,12 @@
-package turingmachine.components;
+package extendedturingmachine.components;
 
-import turingmachine.highlevel.TuringMachine;
+import extendedturingmachine.highlevel.ExtendedTuringMachine;
 
 import java.util.ArrayList;
 
 public class Item {
     private Digit state;
-    private ArrayList<Command> commands;
+    private ArrayList<ExtendedCommand> commands;
     private boolean hasRun = false;
 
     public Item(boolean state){
@@ -29,18 +29,18 @@ public class Item {
 //        this.command = command;
 //    }
 
-    public void addCommand(Command command){
+    public void addCommand(ExtendedCommand command){
         commands.add(command);
     }
 
-    public void setCommands(ArrayList<Command> commands){
+    public void setCommands(ArrayList<ExtendedCommand> commands){
         this.commands = commands;
     }
 
-    public void runCommand(TuringMachine machine)  {
+    public void runCommand(ExtendedTuringMachine machine)  {
         if(commands != null && !hasRun) {
             hasRun = true;
-            for (Command command : commands) {
+            for (ExtendedCommand command : commands) {
                 command.invoke(state, machine);
             }
         }

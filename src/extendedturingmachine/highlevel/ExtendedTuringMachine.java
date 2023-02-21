@@ -1,36 +1,36 @@
-package turingmachine.highlevel;
+package extendedturingmachine.highlevel;
 
-import turingmachine.components.*;
+import extendedturingmachine.components.*;
 
-public class TuringMachine {
+public class ExtendedTuringMachine {
     private final Tape tape;
     private final Observer observer;
 
     private Digit stored;
 
-    public TuringMachine(int len){
+    public ExtendedTuringMachine(int len){
         this(len, 0);
         stored = new Digit(0);
     }
 
-    public TuringMachine(int len, int startPos){
+    public ExtendedTuringMachine(int len, int startPos){
         tape = new Tape(len);
         observer = new Observer(startPos, tape);
         stored = new Digit(0);
     }
 
 
-    public TuringMachine(int startPos, int... ints)  {
+    public ExtendedTuringMachine(int startPos, int... ints)  {
         tape = new Tape(ints);
         observer = new Observer(startPos, tape);
         stored = new Digit(0);
     }
 
-    public TuringMachine(int... ints)  {
+    public ExtendedTuringMachine(int... ints)  {
         this(0, ints);
         stored = new Digit(0);
     }
-    public TuringMachine(int startPos, boolean... bools)  {
+    public ExtendedTuringMachine(int startPos, boolean... bools)  {
         tape = new Tape(bools);
         observer = new Observer(startPos, tape);
         stored = new Digit(0);

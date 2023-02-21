@@ -1,13 +1,13 @@
-package turingmachine.highlevel;
+package extendedturingmachine.highlevel;
 
 import org.jetbrains.annotations.NotNull;
-import turingmachine.components.Command;
-import turingmachine.components.Stage;
+import extendedturingmachine.components.ExtendedCommand;
+import extendedturingmachine.components.Stage;
 import java.util.*;
 
 @Deprecated
-public class TuringInterpreter extends CommandList {
-    private TuringMachine machine;
+public class TuringInterpreter extends ExtendedCommandList {
+    private ExtendedTuringMachine machine;
     private final HashMap<String, Boolean> runtimeData;
 
     public TuringInterpreter(@NotNull String commandToFollow) {
@@ -22,7 +22,7 @@ public class TuringInterpreter extends CommandList {
         runtimeData.put("executeAuto", false);
         runtimeData.put("inCommentBlock", false);
         runtimeData.put("debugPrint", false);
-        machine = new TuringMachine(len, startPos);
+        machine = new ExtendedTuringMachine(len, startPos);
         for (int i = 0; i < lines.length; i++) {
             // Check for block comments as well as in line comments
             if (lines[i].startsWith(BLOCK_COMMENT[0])) {
@@ -47,7 +47,7 @@ public class TuringInterpreter extends CommandList {
                 currentStage = Stage.INFO;
             if (Objects.equals(lines[i], END_INFO)) {
                 currentStage = Stage.COMMAND;
-                machine = new TuringMachine(len, startPos);
+                machine = new ExtendedTuringMachine(len, startPos);
             }
             if (Objects.equals(lines[i], BEGIN_COMMANDSET)) {
                 currentStage = Stage.COMMAND;
@@ -120,7 +120,7 @@ public class TuringInterpreter extends CommandList {
                     ArrayList<String> subCommands = new ArrayList<>(Arrays.asList(sc));
 
                     // Create an arraylist of lambdas to run at execution time (these will be assigned to an Item)
-                    ArrayList<Command> commands = new ArrayList<>();
+                    ArrayList<ExtendedCommand> commands = new ArrayList<>();
 
                     // Loop through every provided subcommand using regex
                     for (int j = 0; j < subCommands.size(); j++) {

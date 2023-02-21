@@ -1,7 +1,7 @@
-package turingmachine;
+package extendedturingmachine;
 
 import org.jetbrains.annotations.NotNull;
-import turingmachine.highlevel.TuringInterpreter;
+import extendedturingmachine.highlevel.TuringInterpreter;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -1,4 +1,4 @@
-package turingmachine.components;
+package extendedturingmachine.components;
 
 public enum Stage {
     NONE,

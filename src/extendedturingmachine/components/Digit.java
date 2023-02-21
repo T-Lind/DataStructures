@@ -1,4 +1,4 @@
-package turingmachine.components;
+package extendedturingmachine.components;
 
 public class Digit {
     private boolean state;

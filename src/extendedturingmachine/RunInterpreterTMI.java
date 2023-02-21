@@ -1,16 +1,14 @@
-package turingmachine;
+package extendedturingmachine;
 
 import org.jetbrains.annotations.NotNull;
-import turingmachine.components.SyntaxException;
-import turingmachine.components.ValueException;
-import turingmachine.highlevel.TuringInterpreter;
-import turingmachine.highlevel.TuringInterpreter2;
+import extendedturingmachine.components.SyntaxException;
+import extendedturingmachine.highlevel.InterpreterTMI;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class RunInterpreter2 {
+public class RunInterpreterTMI {
     public static void main(@NotNull String[] args) throws FileNotFoundException, SyntaxException {
         String summedArgs = "";
         for(String arg: args)
@@ -23,6 +21,6 @@ public class RunInterpreter2 {
             readString.append(reader.nextLine()).append("\n");
         }
         reader.close();
-        var interpreter = new TuringInterpreter2(readString.toString());
+        var interpreter = new InterpreterTMI(readString.toString());
     }
 }

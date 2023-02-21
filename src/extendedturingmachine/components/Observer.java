@@ -1,6 +1,6 @@
-package turingmachine.components;
+package extendedturingmachine.components;
 
-import turingmachine.highlevel.TuringMachine;
+import extendedturingmachine.highlevel.ExtendedTuringMachine;
 
 import java.util.ArrayList;
 
@@ -17,11 +17,11 @@ public class Observer {
         this.tape = tape;
     }
 
-    public void runCommand(TuringMachine machine)  {
+    public void runCommand(ExtendedTuringMachine machine)  {
         tape.getItem(position).runCommand(machine);
     }
 
-    public void setCommands(ArrayList<Command> commands) {
+    public void setCommands(ArrayList<ExtendedCommand> commands) {
         tape.getItem(position).setCommands(commands);
     }
 
@@ -50,7 +50,7 @@ public class Observer {
         return position == 0;
     }
 
-    public void addCommand(Command command) {
+    public void addCommand(ExtendedCommand command) {
         tape.getItem(position).addCommand(command);
     }
 

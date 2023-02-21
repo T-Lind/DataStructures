@@ -1,6 +1,6 @@
-package turingmachine.highlevel;
+package extendedturingmachine.highlevel;
 
-public class CommandList {
+public class ExtendedCommandList {
     // Section info
 
     public final static String BEGIN_INFO = "BEGIN INFO";
