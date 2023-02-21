@@ -7,10 +7,21 @@ public class RunTuringMachine extends CommandList {
         var machine = new TuringMachine(0, new int[]{2, 1, 1, 1});
 
 
-        machine.addCommand(0, NONE, (m -> {
+        machine.addCommand(0, 0, (m -> {
+            m.setTape(3);
             m.move(1);
-            m.setAwareness(m.getTape());
             m.goToPage(1);
+
+        }));
+        machine.addCommand(0, 1, (m -> {
+            m.setTape(8);
+            m.stop();
+
+        }));
+        machine.addCommand(1, 2, (m -> {
+            m.setTape(0);
+            m.move(4);
+            m.goToPage(0);
         }));
 
         machine.run();

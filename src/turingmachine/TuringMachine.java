@@ -5,10 +5,11 @@ import turingmachine.highlevel.CommandList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class TuringMachine extends CommandList {
 
-    private ArrayList<HashMap<Integer, Command>> pages;
+    private ArrayList<HashMap<Integer, ArrayList<Command>>> pages;
 
     private Integer awareness;
     private Integer page;
@@ -28,7 +29,7 @@ public class TuringMachine extends CommandList {
 
     public TuringMachine(int... defaultValues) {
         pages = new ArrayList<>();
-        awareness = NONE;
+        awareness = 0;
         page = 0;
         tape = new HashMap<>();
         position = 0;
@@ -36,7 +37,7 @@ public class TuringMachine extends CommandList {
 
     public TuringMachine(Integer startPos, int... defaultValues) {
         pages = new ArrayList<>();
-        awareness = NONE;
+        awareness = 0;
         page = 0;
         tape = new HashMap<>();
         for (int i = 0; i < defaultValues.length; i++)
@@ -58,15 +59,17 @@ public class TuringMachine extends CommandList {
     public void addCommand(Integer page, Integer awareness, Command command) {
         if (page >= pages.size())
             pages.add(new HashMap<>());
-        if (pages.get(page) == null)
-            pages.get(page).put(awareness, command);
-        pages.get(page).put(awareness,command);
+        if (pages.get(page) == null || pages.get(page).get(awareness) == null){
+            pages.get(page).put(awareness, new ArrayList<>());
+        }
+        pages.get(page).get(awareness).add((m -> m.setAwareness(m.getTape())));
+        pages.get(page).get(awareness).add(command);
     }
 
     public void run() {
-        while (awareness != STOP) {
-            pages.get(page).get(awareness).invoke(this);
-
+        while (page != STOP) {
+            for(Command cmd: pages.get(page).get(awareness))
+                cmd.invoke(this);
         }
     }
 
@@ -90,22 +93,38 @@ public class TuringMachine extends CommandList {
     }
 
     public void printTape(){
-        for(Integer i: tape.keySet()){
-            System.out.println(tape.get(i)+" ");
+        StringBuilder printStr = new StringBuilder();
+        Set<Integer> keys = tape.keySet();
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        for(Integer value: keys){
+            if(value < min)
+                min = value;
+            if(value > max)
+                max = value;
         }
-    }
-
-    public HashMap<Integer, Command> getPage(){
-        return pages.get(page);
+        for(int i=min;i<=max;i++){
+            if(tape.get(i) != null){
+                printStr.append(tape.get(i)).append(" ");
+            }
+            else {
+                printStr.append("Ø ");
+            }
+        }
+        System.out.println(printStr);
     }
 
     public void goToPage(int pageNum){
         page = pageNum;
     }
 
+    public void stop(){
+        goToPage(STOP);
+    }
+
     private static Integer removeNull(Integer input){
         if(input == null)
-            return NONE;
+            return 0;
         return input;
     }
 }
