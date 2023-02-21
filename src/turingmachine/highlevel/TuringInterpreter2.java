@@ -47,6 +47,18 @@ public class TuringInterpreter2 extends CommandList {
             if (lines[i].startsWith(DEBUG_PRINT)) {
                 runtimeData.replace("debugPrint", true);
             }
+            if (lines[i].startsWith(INIT_TAPE)) {
+                String[] strValues = lines[i].substring(i).split(" ");
+                boolean[] boolValues = new boolean[strValues.length];
+                for(int k=0;k<strValues.length;k++){
+                    // TODO: implement setting the tape to init values in info stage
+//                    tape. strValues[k].equals("1");
+                }
+
+
+                runtimeData.replace("debugPrint", true);
+            }
+
             if (Objects.equals(lines[i], EXECUTE_AUTO)) {
                 runtimeData.replace("executeAuto", true);
             }

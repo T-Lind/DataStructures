@@ -15,6 +15,7 @@ public class CommandList {
     public final static String SIZE = "SIZE ";
     public final static String START_POS = "START POS ";
     public final static String EXECUTE_AUTO = "EXECUTE AUTO";
+    public final static String INIT_TAPE = "INITIALIZE TAPE ";
 
     // TODO: Implement this feature
     public final static String N_TAPES = "NUMBER TAPES";
