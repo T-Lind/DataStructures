@@ -5,7 +5,7 @@ import turingmachine.highlevel.CommandList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
+
 import java.util.Scanner;
 
 public class TuringInterpreter extends CommandList {
@@ -43,16 +43,29 @@ public class TuringInterpreter extends CommandList {
                 startPosition = Integer.parseInt(getInsideDelimiters(line));
             } else if (line.startsWith(DEFINE)) {
                 String inside = getInsideDelimiters(line);
-                if(inside.indexOf("\"")+1 == inside.lastIndexOf("\"")){
-                    MACHINE_SYMBOL = "";
-                }
-                else {
-                    String symbol = inside.substring(inside.indexOf("\"") + 1, inside.lastIndexOf("\""));
+                String symbol = inside.substring(inside.indexOf("\"") + 1, inside.lastIndexOf("\""));
 
-                    if (inside.contains("MACHINE_SYMBOL")) {
-                        MACHINE_SYMBOL = symbol; // TODO: GET THIS WORKING
-                    }
-                }
+                if (inside.contains("MACHINE_SYMBOL"))
+                    MACHINE_SYMBOL = symbol;
+                else if (inside.contains("FUTURE_SYMBOL"))
+                    FUTURE_SYMBOL = symbol;
+                else if(inside.contains("CONNECTOR"))
+                    CONNECTOR = symbol;
+                else if(inside.contains("PAGE"))
+                    PAGE = symbol+"=";
+                else if(inside.contains("AWARENESS"))
+                    AWARENESS = symbol+"=";
+                else if(inside.contains("DELIMITER_OPEN"))
+                    DELIMITER_OPEN = symbol;
+                else if(inside.contains("DELIMITER_CLOSE"))
+                    DELIMITER_CLOSE = symbol;
+                else if(inside.contains("COMMENT"))
+                    COMMENT = symbol;
+                else if(inside.contains("BLOCK_COMMENT_START"))
+                    BLOCK_COMMENT[0] = symbol;
+                else if(inside.contains("BLOCK_COMMENT_END"))
+                    BLOCK_COMMENT[1] = symbol;
+                refreshList();
             } else if (line.startsWith(GENERATE_MACHINE)) {
                 if (values == null) {
                     machine = new TuringMachine(startPosition);
@@ -61,10 +74,10 @@ public class TuringInterpreter extends CommandList {
                 }
             } else if (line.startsWith(PRINT)) {
                 String inside = getInsideDelimiters(line);
-                if(inside.length() == 0)
+                if (inside.length() == 0)
                     machine.printTape();
-                else{
-                    System.out.println(inside.substring(1, inside.length()-1));
+                else {
+                    System.out.println(inside.substring(1, inside.length() - 1));
                 }
             } else if (line.startsWith(RUN)) {
                 machine.run();
@@ -89,10 +102,10 @@ public class TuringInterpreter extends CommandList {
                         machine.addCommand(page, awareness, TuringMachine::stop, false);
                     } else if (inside.startsWith(FUTURE_PRINT)) {
                         String printStatement = getInsideDelimiters(inside);
-                        if(printStatement.length() == 0)
+                        if (printStatement.length() == 0)
                             machine.addCommand(page, awareness, (m) -> m.printTape());
-                        else{
-                            machine.addCommand(page, awareness, (m) -> System.out.println(printStatement.substring(1, printStatement.length()-1)));
+                        else {
+                            machine.addCommand(page, awareness, (m) -> System.out.println(printStatement.substring(1, printStatement.length() - 1)));
                         }
                     } else if (inside.startsWith(FUTURE_SETTAPE)) {
                         final int value = onlyKeepInt(getInsideDelimiters(inside));

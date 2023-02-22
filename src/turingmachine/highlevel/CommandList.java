@@ -7,9 +7,6 @@ public class CommandList {
     public static String FUTURE_SYMBOL = "?";
     public static String CONNECTOR = "";
     public static String DEFINE = "DEFINE";
-    public static String DENOTE = "DENOTE"; // TODO: IMPLEMENT THESE FEATURES
-    public static String BEFORE = "BEFORE";
-    public static String AFTER = "AFTER";
 
     public static String DELIMITER_OPEN = "(";
     public static String DELIMITER_CLOSE = ")";
@@ -36,4 +33,34 @@ public class CommandList {
 
     public static String RUN = MACHINE_SYMBOL + CONNECTOR + "run()";
 
+    public static void refreshList() {
+        refreshList(true);
+    }
+
+    public static void refreshList(boolean beforeFunction) {
+        if (beforeFunction) {
+            INITIALIZE_VALUES = MACHINE_SYMBOL + CONNECTOR + "setValues";
+            SET_POSITION = MACHINE_SYMBOL + CONNECTOR + "setPosition";
+            GENERATE_MACHINE = MACHINE_SYMBOL + CONNECTOR + "generate()";
+
+            PRINT = MACHINE_SYMBOL + CONNECTOR + "print";
+            FUTURE_PRINT = FUTURE_SYMBOL + CONNECTOR + "print";
+            CMD = MACHINE_SYMBOL + CONNECTOR + "setCommand";
+
+
+            FUTURE_STOP = FUTURE_SYMBOL + CONNECTOR + "stop()";
+            FUTURE_SETTAPE = FUTURE_SYMBOL + CONNECTOR + "setTape";
+            FUTURE_MOVE = FUTURE_SYMBOL + CONNECTOR + "move";
+            FUTURE_GOTOPAGE = FUTURE_SYMBOL + CONNECTOR + "goToPage";
+
+            RUN = MACHINE_SYMBOL + CONNECTOR + "run()";
+        } else {
+            // TODO: Implement this feature for non-empty function calls
+            GENERATE_MACHINE = "generate()" + MACHINE_SYMBOL;
+            FUTURE_STOP = "stop()" + FUTURE_SYMBOL;
+            RUN = "run()" + MACHINE_SYMBOL;
+        }
+
+
+    }
 }
