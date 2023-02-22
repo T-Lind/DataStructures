@@ -1,34 +1,39 @@
 package turingmachine.highlevel;
 
 public class CommandList {
-    public static final int STOP = Integer.MAX_VALUE;
+    public static int STOP = Integer.MAX_VALUE;
 
-    public static final String machineSymbol = "!";
-    public static final String futureSymbol = "?";
-    public static final String connector = "";
+    public static String MACHINE_SYMBOL = "";
+    public static String FUTURE_SYMBOL = "?";
+    public static String CONNECTOR = "";
+    public static String DEFINE = "DEFINE";
+    public static String DENOTE = "DENOTE"; // TODO: IMPLEMENT THESE FEATURES
+    public static String BEFORE = "BEFORE";
+    public static String AFTER = "AFTER";
 
-    public static final String DELIMITER_OPEN = "(";
-    public static final String DELIMITER_CLOSE = ")";
-    public static final String COMMENT = "//";
-    public static final String[] BLOCK_COMMENT = {"/*", "*/"};
-    public static final String INTEGERS = "-0123456789";
+    public static String DELIMITER_OPEN = "(";
+    public static String DELIMITER_CLOSE = ")";
+    public static String COMMENT = "//";
+    public static String[] BLOCK_COMMENT = {"/*", "*/"};
+    public static String INTEGERS = "-0123456789";
 
-    public static final String INITIALIZE_VALUES = machineSymbol + connector + "setValues";
-    public static final String SET_POSITION = machineSymbol + connector + "setPosition";
-    public static final String GENERATE_MACHINE = machineSymbol + connector + "generate()";
+    public static String PAGE = "PAGE=";
+    public static String AWARENESS = "AWARENESS=";
 
-    public static final String PRINT = machineSymbol + connector + "print";
-    public static final String FUTURE_PRINT = futureSymbol + connector + "print";
+    public static String INITIALIZE_VALUES = MACHINE_SYMBOL + CONNECTOR + "setValues";
+    public static String SET_POSITION = MACHINE_SYMBOL + CONNECTOR + "setPosition";
+    public static String GENERATE_MACHINE = MACHINE_SYMBOL + CONNECTOR + "generate()";
 
-    public static final String CMD = machineSymbol + connector + "setCommand";
-    public static final String PAGE = "PAGE=";
-    public static final String AWARENESS = "AWARENESS=";
+    public static String PRINT = MACHINE_SYMBOL + CONNECTOR + "print";
+    public static String FUTURE_PRINT = FUTURE_SYMBOL + CONNECTOR + "print";
+    public static String CMD = MACHINE_SYMBOL + CONNECTOR + "setCommand";
 
 
-    public static final String FUTURE_STOP = futureSymbol + connector + "stop()";
-    public static final String FUTURE_SETTAPE = futureSymbol + connector + "setTape";
-    public static final String FUTURE_MOVE = futureSymbol + connector + "move";
-    public static final String FUTURE_GOTOPAGE = futureSymbol + connector + "goToPage";
+    public static String FUTURE_STOP = FUTURE_SYMBOL + CONNECTOR + "stop()";
+    public static String FUTURE_SETTAPE = FUTURE_SYMBOL + CONNECTOR + "setTape";
+    public static String FUTURE_MOVE = FUTURE_SYMBOL + CONNECTOR + "move";
+    public static String FUTURE_GOTOPAGE = FUTURE_SYMBOL + CONNECTOR + "goToPage";
 
-    public static final String RUN = machineSymbol + connector + "run()";
+    public static String RUN = MACHINE_SYMBOL + CONNECTOR + "run()";
+
 }

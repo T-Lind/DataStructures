@@ -33,26 +33,38 @@ public class TuringInterpreter extends CommandList {
         int startPosition = 0;
         TuringMachine machine = null;
         String[] lines = readString.toString().split(";");
-        for (int i = 0; i < lines.length; i++) {
-            if (lines[i].startsWith(INITIALIZE_VALUES)) {
-                String[] data = getInsideDelimiters(lines[i]).split(" ");
+        for (String line : lines) {
+            if (line.startsWith(INITIALIZE_VALUES)) {
+                String[] data = getInsideDelimiters(line).split(" ");
                 values = new int[data.length];
                 for (int j = 0; j < data.length; j++)
                     values[j] = Integer.parseInt(data[j]);
-            } else if (lines[i].startsWith(SET_POSITION)) {
-                startPosition = Integer.parseInt(getInsideDelimiters(lines[i]));
-            } else if (lines[i].startsWith(GENERATE_MACHINE)) {
+            } else if (line.startsWith(SET_POSITION)) {
+                startPosition = Integer.parseInt(getInsideDelimiters(line));
+            } else if (line.startsWith(DEFINE)) {
+                String inside = getInsideDelimiters(line);
+                if(inside.indexOf("\"")+1 == inside.lastIndexOf("\"")){
+                    MACHINE_SYMBOL = "";
+                }
+                else {
+                    String symbol = inside.substring(inside.indexOf("\"") + 1, inside.lastIndexOf("\""));
+
+                    if (inside.contains("MACHINE_SYMBOL")) {
+                        MACHINE_SYMBOL = symbol; // TODO: GET THIS WORKING
+                    }
+                }
+            } else if (line.startsWith(GENERATE_MACHINE)) {
                 if (values == null) {
                     machine = new TuringMachine(startPosition);
                 } else {
                     machine = new TuringMachine(startPosition, values);
                 }
-            } else if (lines[i].startsWith(PRINT)) {
+            } else if (line.startsWith(PRINT)) {
                 machine.printTape();
-            } else if (lines[i].startsWith(RUN)) {
+            } else if (line.startsWith(RUN)) {
                 machine.run();
-            } else if (lines[i].startsWith(CMD)) {
-                String[] insides = getInsideDelimiters(lines[i]).strip().split(" ");
+            } else if (line.startsWith(CMD)) {
+                String[] insides = getInsideDelimiters(line).strip().split(" ");
                 int page = 0;
                 int awareness = 0;
                 for (int k = 0; k < 2; k++) {
@@ -63,8 +75,6 @@ public class TuringInterpreter extends CommandList {
                         awareness = onlyKeepInt(inside);
                     }
                 }
-                int finalPage = page;
-                int finalAwareness = awareness;
                 machine.addCommand(page, awareness, (m) -> m.setAwareness(m.getTape()));
                 for (int k = 2; k < insides.length; k++) {
                     var inside = insides[k];

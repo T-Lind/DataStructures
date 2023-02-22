@@ -1,3 +1,4 @@
+//DEFINE(MACHINE_SYMBOL "!")
 /*
     Example program using a turing machine
     Output should be the following:
@@ -6,13 +7,13 @@
     3 0 1 1
     4 Ø Ø 3 0 1 1
 */
-!setValues(2 1 1 1);
-!setPosition(0);
+setValues(2 1 1 1);
+setPosition(0);
 
-!generate();
+generate();
 
-!print();
-!setCommand(
+print();
+setCommand(
     // Setting first command!
     AWARENESS=0, PAGE=0,
         ?setTape(3)
@@ -20,13 +21,13 @@
         ?goToPage(1)
         ?print()
 );
-!setCommand(
+setCommand(
     AWARENESS=1, PAGE=0,
     ?setTape(4)
     ?stop()
 );
 
-!setCommand(
+setCommand(
     AWARENESS=2, PAGE=1,
     ?setTape(0)
     ?move(-4)
@@ -34,6 +35,6 @@
     ?print()
 );
 
-!run();
-!print();
+run();
+print();
 
