@@ -17,8 +17,15 @@ public class TuringInterpreter extends CommandList {
         File program = new File(summedArgs);
         Scanner reader = new Scanner(program);
         StringBuilder readString = new StringBuilder();
+        boolean inCommentBlock = false;
         while (reader.hasNextLine()) {
-            readString.append(reader.nextLine());
+            var line = reader.nextLine();
+            if (line.startsWith(BLOCK_COMMENT[0]))
+                inCommentBlock = true;
+            if (!line.startsWith(COMMENT) && !inCommentBlock)
+                readString.append(line);
+            if (line.startsWith(BLOCK_COMMENT[1]))
+                inCommentBlock = false;
         }
         reader.close();
 
@@ -56,42 +63,41 @@ public class TuringInterpreter extends CommandList {
                         awareness = onlyKeepInt(inside);
                     }
                 }
-                machine.beginCommand(page, awareness);
+                int finalPage = page;
+                int finalAwareness = awareness;
+                machine.addCommand(page, awareness, (m) -> m.setAwareness(m.getTape()));
                 for (int k = 2; k < insides.length; k++) {
                     var inside = insides[k];
                     if (inside.equals(" "))
                         continue;
                     if (inside.startsWith(FUTURE_STOP)) {
                         machine.addCommand(page, awareness, (m) -> {
-                            System.out.println("stopping...");
                             m.stop();
                         }, false);
+                    } else if (inside.startsWith(FUTURE_PRINT)) {
+                        machine.addCommand(page, awareness, (m) -> m.printTape(), false);
                     } else if (inside.startsWith(FUTURE_SETTAPE)) {
                         final int value = onlyKeepInt(getInsideDelimiters(inside));
                         machine.addCommand(page, awareness, (m) -> {
-                            System.out.println("setting tape...");
                             m.setTape(value);
                         }, false);
                     } else if (inside.startsWith(FUTURE_MOVE)) {
                         final int value = onlyKeepInt(getInsideDelimiters(inside));
                         machine.addCommand(page, awareness, (m) -> {
-                            System.out.println("moving...");
                             m.move(value);
                         }, false);
                     } else if (inside.startsWith(FUTURE_GOTOPAGE)) {
                         final int value = onlyKeepInt(getInsideDelimiters(inside));
                         machine.addCommand(page, awareness, (m) -> {
-                            System.out.println("gotopage: "+value);
                             m.goToPage(value);
                         }, false);
                     }
                 }
-//                System.out.println(machine.getCommands(page, awareness).size());
             }
         }
     }
 
-    private static int onlyKeepInt(String input) {
+    public static int onlyKeepInt(String input) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < input.length(); i++) {
             if (INTEGERS.contains(input.substring(i, i + 1))) {

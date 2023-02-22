@@ -1,26 +1,36 @@
+/*
+    Example program using a turing machine
+    Output should be the following:
+    2 1 1 1
+    4 Ø Ø 3 0 1 1
+*/
 machine::setValues(2 1 1 1);
-machine::setPosition(4);
+machine::setPosition(0);
 
 machine::generate();
 
-machine::printTape();
+machine::print();
 machine::setCommand(
+    // Setting first command!
     AWARENESS=0, PAGE=0,
         future::setTape(3)
         future::move(1)
         future::goToPage(1)
+        future::print()
 );
 machine::setCommand(
     AWARENESS=1, PAGE=0,
-        future::setTape(8)
-        future::stop()
+    future::setTape(4)
+    future::stop()
 );
+
 machine::setCommand(
     AWARENESS=2, PAGE=1,
         future::setTape(0)
         future::move(-4)
         future::goToPage(0)
+        future::print()
 );
 
 machine::run();
-machine::printTape();
+machine::print();

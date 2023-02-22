@@ -5,13 +5,16 @@ public class CommandList {
 
     public static final String DELIMITER_OPEN = "(";
     public static final String DELIMITER_CLOSE = ")";
-    public static final String INTEGERS = "0123456789";
+    public static final String COMMENT = "//";
+    public static final String[] BLOCK_COMMENT = {"/*", "*/"};
+    public static final String INTEGERS = "-0123456789";
 
     public static final String INITIALIZE_VALUES = "machine::setValues";
     public static final String SET_POSITION = "machine::setPosition";
     public static final String GENERATE_MACHINE = "machine::generate()";
 
-    public static final String PRINT = "machine::printTape";
+    public static final String PRINT = "machine::print";
+    public static final String FUTURE_PRINT = "future::print";
 
     public static final String CMD = "machine::setCommand";
     public static final String PAGE = "PAGE=";

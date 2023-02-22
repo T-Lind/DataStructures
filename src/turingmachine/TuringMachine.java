@@ -59,7 +59,7 @@ public class TuringMachine extends CommandList {
 
 
     public void addCommand(Integer page, Integer awareness, Command command) {
-        addCommand(page, awareness, command, true);
+        addCommand(page, awareness, command, false);
     }
 
     public void addCommand(Integer page, Integer awareness, Command command, boolean autoStart) {
@@ -74,11 +74,11 @@ public class TuringMachine extends CommandList {
     }
 
     public void beginCommand(Integer page, Integer awareness) {
-        if (page >= pages.size())
-            pages.add(new HashMap<>());
-        if (pages.get(page) == null || pages.get(page).get(awareness) == null) {
-            pages.get(page).put(awareness, new ArrayList<>());
-        }
+//        if (page >= pages.size())
+//            pages.add(new HashMap<>());
+//        if (pages.get(page) == null || pages.get(page).get(awareness) == null) {
+//            pages.get(page).put(awareness, new ArrayList<>());
+//        }
         pages.get(page).get(awareness).add((m -> {
             m.setAwareness(m.getTape());
             m.printTape();
@@ -91,10 +91,8 @@ public class TuringMachine extends CommandList {
 
     public void run() {
         while (page != STOP) {
-            System.out.println("Page #:"+page);
             var commands = pages.get(page).get(awareness);
             for (int i = 0; i < commands.size(); i++) {
-                System.out.println("Running item " + i + " in the commands sequence");
                 commands.get(i).invoke(this);
             }
         }
