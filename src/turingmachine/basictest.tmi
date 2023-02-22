@@ -2,35 +2,38 @@
     Example program using a turing machine
     Output should be the following:
     2 1 1 1
+    3 1 1 1
+    3 0 1 1
     4 Ø Ø 3 0 1 1
 */
-machine::setValues(2 1 1 1);
-machine::setPosition(0);
+!setValues(2 1 1 1);
+!setPosition(0);
 
-machine::generate();
+!generate();
 
-machine::print();
-machine::setCommand(
+!print();
+!setCommand(
     // Setting first command!
     AWARENESS=0, PAGE=0,
-        future::setTape(3)
-        future::move(1)
-        future::goToPage(1)
-        future::print()
+        ?setTape(3)
+        ?move(1)
+        ?goToPage(1)
+        ?print()
 );
-machine::setCommand(
+!setCommand(
     AWARENESS=1, PAGE=0,
-    future::setTape(4)
-    future::stop()
+    ?setTape(4)
+    ?stop()
 );
 
-machine::setCommand(
+!setCommand(
     AWARENESS=2, PAGE=1,
-        future::setTape(0)
-        future::move(-4)
-        future::goToPage(0)
-        future::print()
+    ?setTape(0)
+    ?move(-4)
+    ?goToPage(0)
+    ?print()
 );
 
-machine::run();
-machine::print();
+!run();
+!print();
+

@@ -92,8 +92,13 @@ public class TuringMachine extends CommandList {
     public void run() {
         while (page != STOP) {
             var commands = pages.get(page).get(awareness);
-            for (int i = 0; i < commands.size(); i++) {
-                commands.get(i).invoke(this);
+            if(commands != null) {
+                for (Command command : commands) {
+                    command.invoke(this);
+                }
+            }
+            else {
+                throw new NullPointerException("No commands specified for page "+page+" and awareness "+awareness);
             }
         }
     }
