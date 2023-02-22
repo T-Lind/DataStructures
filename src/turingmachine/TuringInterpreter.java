@@ -48,7 +48,7 @@ public class TuringInterpreter extends CommandList {
                 String[] insides = getInsideDelimiters(lines[i]).strip().split(" ");
                 int page = 0;
                 int awareness = 0;
-                for(int k=0;k<2;k++){
+                for (int k = 0; k < 2; k++) {
                     var inside = insides[k];
                     if (inside.startsWith(PAGE)) {
                         page = onlyKeepInt(inside);
@@ -57,24 +57,33 @@ public class TuringInterpreter extends CommandList {
                     }
                 }
                 machine.beginCommand(page, awareness);
-                for (int k=2;k<insides.length;k++) {
+                for (int k = 2; k < insides.length; k++) {
                     var inside = insides[k];
                     if (inside.equals(" "))
                         continue;
                     if (inside.startsWith(FUTURE_STOP)) {
                         machine.addCommand(page, awareness, (m) -> {
-                            m.printTape();
+                            System.out.println("stopping...");
                             m.stop();
                         }, false);
                     } else if (inside.startsWith(FUTURE_SETTAPE)) {
                         final int value = onlyKeepInt(getInsideDelimiters(inside));
-                        machine.addCommand(page, awareness, (m) -> m.setTape(value), false);
+                        machine.addCommand(page, awareness, (m) -> {
+                            System.out.println("setting tape...");
+                            m.setTape(value);
+                        }, false);
                     } else if (inside.startsWith(FUTURE_MOVE)) {
                         final int value = onlyKeepInt(getInsideDelimiters(inside));
-                        machine.addCommand(page, awareness, (m) -> m.move(value), false);
+                        machine.addCommand(page, awareness, (m) -> {
+                            System.out.println("moving...");
+                            m.move(value);
+                        }, false);
                     } else if (inside.startsWith(FUTURE_GOTOPAGE)) {
                         final int value = onlyKeepInt(getInsideDelimiters(inside));
-                        machine.addCommand(page, awareness, (m) -> m.goToPage(value), false);
+                        machine.addCommand(page, awareness, (m) -> {
+                            System.out.println("gotopage: "+value);
+                            m.goToPage(value);
+                        }, false);
                     }
                 }
 //                System.out.println(machine.getCommands(page, awareness).size());

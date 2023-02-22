@@ -61,20 +61,22 @@ public class TuringMachine extends CommandList {
     public void addCommand(Integer page, Integer awareness, Command command) {
         addCommand(page, awareness, command, true);
     }
+
     public void addCommand(Integer page, Integer awareness, Command command, boolean autoStart) {
         if (page >= pages.size())
             pages.add(new HashMap<>());
-        if (pages.get(page) == null || pages.get(page).get(awareness) == null){
+        if (pages.get(page) == null || pages.get(page).get(awareness) == null) {
             pages.get(page).put(awareness, new ArrayList<>());
         }
-        if(autoStart)
+        if (autoStart)
             pages.get(page).get(awareness).add((m -> m.setAwareness(m.getTape())));
         pages.get(page).get(awareness).add(command);
     }
-    public void beginCommand(Integer page, Integer awareness){
+
+    public void beginCommand(Integer page, Integer awareness) {
         if (page >= pages.size())
             pages.add(new HashMap<>());
-        if (pages.get(page) == null || pages.get(page).get(awareness) == null){
+        if (pages.get(page) == null || pages.get(page).get(awareness) == null) {
             pages.get(page).put(awareness, new ArrayList<>());
         }
         pages.get(page).get(awareness).add((m -> {
@@ -83,15 +85,18 @@ public class TuringMachine extends CommandList {
         }));
     }
 
-    public ArrayList<Command> getCommands(int page, int awareness){
+    public ArrayList<Command> getCommands(int page, int awareness) {
         return pages.get(page).get(awareness);
     }
 
     public void run() {
         while (page != STOP) {
-            for(Command cmd: pages.get(page).get(awareness))
-                if(page != STOP)
-                    cmd.invoke(this);
+            System.out.println("Page #:"+page);
+            var commands = pages.get(page).get(awareness);
+            for (int i = 0; i < commands.size(); i++) {
+                System.out.println("Running item " + i + " in the commands sequence");
+                commands.get(i).invoke(this);
+            }
         }
     }
 
@@ -110,46 +115,45 @@ public class TuringMachine extends CommandList {
         tape.put(position, value);
     }
 
-    public Integer getTape(){
+    public Integer getTape() {
         return tape.get(position);
     }
 
-    public void printTape(){
+    public void printTape() {
         StringBuilder printStr = new StringBuilder();
         Set<Integer> keys = tape.keySet();
         int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
-        for(Integer value: keys){
-            if(value < min)
+        for (Integer value : keys) {
+            if (value < min)
                 min = value;
-            if(value > max)
+            if (value > max)
                 max = value;
         }
-        for(int i=min;i<=max;i++){
-            if(tape.get(i) != null){
+        for (int i = min; i <= max; i++) {
+            if (tape.get(i) != null) {
                 printStr.append(tape.get(i)).append(" ");
-            }
-            else {
+            } else {
                 printStr.append("Ø ");
             }
         }
         System.out.println(printStr);
     }
 
-    public void goToPage(int pageNum){
+    public void goToPage(int pageNum) {
         page = pageNum;
     }
 
-    public void stop(){
+    public void stop() {
         goToPage(STOP);
     }
 
-    public void setPosition(int position){
+    public void setPosition(int position) {
         this.position = position;
     }
 
-    private static Integer removeNull(Integer input){
-        if(input == null)
+    private static Integer removeNull(Integer input) {
+        if (input == null)
             return 0;
         return input;
     }
