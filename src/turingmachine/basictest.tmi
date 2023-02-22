@@ -25,6 +25,7 @@ setCommand(
     AWARENESS=1, PAGE=0,
     ?setTape(4)
     ?stop()
+    ?print()
 );
 
 setCommand(
@@ -36,5 +37,5 @@ setCommand(
 );
 
 run();
-print();
+print("Finished.");
 

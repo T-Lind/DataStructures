@@ -10,11 +10,11 @@ import java.util.Scanner;
 
 public class TuringInterpreter extends CommandList {
     public static void main(@NotNull String[] args) throws FileNotFoundException {
-        String summedArgs = "";
+        StringBuilder summedArgs = new StringBuilder();
         for (String arg : args)
-            summedArgs += arg + " ";
+            summedArgs.append(arg).append(" ");
 
-        File program = new File(summedArgs);
+        File program = new File(summedArgs.toString());
         Scanner reader = new Scanner(program);
         StringBuilder readString = new StringBuilder();
         boolean inCommentBlock = false;
@@ -60,7 +60,12 @@ public class TuringInterpreter extends CommandList {
                     machine = new TuringMachine(startPosition, values);
                 }
             } else if (line.startsWith(PRINT)) {
-                machine.printTape();
+                String inside = getInsideDelimiters(line);
+                if(inside.length() == 0)
+                    machine.printTape();
+                else{
+                    System.out.println(inside.substring(1, inside.length()-1));
+                }
             } else if (line.startsWith(RUN)) {
                 machine.run();
             } else if (line.startsWith(CMD)) {
@@ -81,11 +86,14 @@ public class TuringInterpreter extends CommandList {
                     if (inside.equals(" "))
                         continue;
                     if (inside.startsWith(FUTURE_STOP)) {
-                        machine.addCommand(page, awareness, (m) -> {
-                            m.stop();
-                        }, false);
+                        machine.addCommand(page, awareness, TuringMachine::stop, false);
                     } else if (inside.startsWith(FUTURE_PRINT)) {
-                        machine.addCommand(page, awareness, (m) -> m.printTape(), false);
+                        String printStatement = getInsideDelimiters(inside);
+                        if(printStatement.length() == 0)
+                            machine.addCommand(page, awareness, (m) -> m.printTape());
+                        else{
+                            machine.addCommand(page, awareness, (m) -> System.out.println(printStatement.substring(1, printStatement.length()-1)));
+                        }
                     } else if (inside.startsWith(FUTURE_SETTAPE)) {
                         final int value = onlyKeepInt(getInsideDelimiters(inside));
                         machine.addCommand(page, awareness, (m) -> {
