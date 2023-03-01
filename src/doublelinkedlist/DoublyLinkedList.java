@@ -1,7 +1,19 @@
 package doublelinkedlist;
 
+/**
+ * A doubly linked list.
+ * Depending on list size, getting an item will approach from the shortest side.
+ * Additionally has a print in reverse method used
+ *
+ * @param <T> the generic type to store
+ */
 class DoublyLinkedList<T> {
-    static class Node<Z> {
+    /**
+     * Private internal class used to represent a node
+     *
+     * @param <Z> Generic type to store, must be different from < T >.
+     */
+    private static class Node<Z> {
         public Z item;
         public Node<Z> previous;
         public Node<Z> next;
@@ -45,7 +57,7 @@ class DoublyLinkedList<T> {
             add(item);
             return;
         }
-        if(pos == 0){
+        if (pos == 0) {
             var next = head;
             head = newNode;
             head.next = next;
@@ -53,7 +65,7 @@ class DoublyLinkedList<T> {
             length++;
             return;
         }
-        var node = getNode(pos-1);
+        var node = getNode(pos - 1);
         var nextNode = node.next;
         node.next = newNode;
         node.next.previous = node;
@@ -62,33 +74,36 @@ class DoublyLinkedList<T> {
         length++;
     }
 
-    public T remove(int pos){
-        if(pos == 0){
+    public T remove(int pos) {
+        if (pos == 0) {
             var item = head.item;
+            head.next.previous = null;
             head = head.next;
+            length--;
             return item;
         }
 
-        var nodeBefore = getNode(pos-1);
+        var nodeBefore = getNode(pos - 1);
         var nodeAfter = nodeBefore.next.next;
         var oldItem = nodeBefore.next.item;
         nodeBefore.next = nodeAfter;
         nodeAfter.previous = nodeBefore;
+        length--;
         return oldItem;
     }
 
-    public T get(int pos){
+    public T get(int pos) {
         return getNode(pos).item;
     }
 
-    public T set(int pos, T value){
+    public T set(int pos, T value) {
         var node = getNode(pos);
         var old = node.item;
         node.item = value;
         return old;
     }
 
-    public Node<T> getNode(int pos) {
+    private Node<T> getNode(int pos) {
         Node<T> currentNode;
         int currentPos;
         if (pos < size() / 2) {
@@ -125,7 +140,7 @@ class DoublyLinkedList<T> {
         return returnString.append("]").toString();
     }
 
-    public String toStringReverse(){
+    public String toStringReverse() {
         var returnString = new StringBuilder("[");
         var current = tail;
         while (current != null) {
@@ -137,15 +152,15 @@ class DoublyLinkedList<T> {
         return returnString.append("]").toString();
     }
 
-    public String nodeConnections(){
+    public String nodeConnections() {
         var returnString = new StringBuilder();
         var currentNode = head;
         int idx = 0;
-        while(currentNode != null){
+        while (currentNode != null) {
             returnString.append("Node ").append(idx).append("; Item: ").append(currentNode.item);
-            if(currentNode.previous != null)
+            if (currentNode.previous != null)
                 returnString.append(", Prev item: ").append(currentNode.previous.item);
-            if(currentNode.next != null)
+            if (currentNode.next != null)
                 returnString.append(", next item: ").append(currentNode.next.item);
             returnString.append("\n");
             currentNode = currentNode.next;

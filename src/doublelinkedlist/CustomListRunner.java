@@ -17,7 +17,6 @@ public class CustomListRunner {
         System.out.println("\nadding fruit at position 1");
         listy.add(1, "fruit");
         System.out.println("size = " + listy.size() + "  " + listy);
-        System.out.println(listy.getNode(1).previous);
 
         System.out.println("\nadding grapefruit at position 3");
         listy.add(3, "grapefruit");
