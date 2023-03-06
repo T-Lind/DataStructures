@@ -45,6 +45,7 @@ public class TuringInterpreter extends CommandList {
                 String inside = getInsideDelimiters(line);
                 String symbol = inside.substring(inside.indexOf("\"") + 1, inside.lastIndexOf("\""));
 
+
                 if (inside.contains("MACHINE_SYMBOL"))
                     MACHINE_SYMBOL = symbol;
                 else if (inside.contains("FUTURE_SYMBOL"))

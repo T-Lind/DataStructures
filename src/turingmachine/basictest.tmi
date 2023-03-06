@@ -1,12 +1,13 @@
-DEFINE(FUTURE_SYMBOL "asynch->");
-DEFINE(PAGE "page");
 /*
     Example program using a turing machine
     Output should be the following:
+
+    Starting turing machine...
     2 1 1 1
     3 1 1 1
     3 0 1 1
     4 Ø Ø 3 0 1 1
+    Finished.
 */
 print("Starting turing machine...");
 
@@ -17,27 +18,27 @@ generate();
 
 print();
 setCommand(
-    // Setting first commands asynch->
-    AWARENESS=0, page=0,
-        asynch->setTape(3)
-        asynch->move(1)
-        asynch->goToPage(1)
-        asynch->print()
+    // Setting first commands ?
+    AWARENESS=0, PAGE=0,
+        ?setTape(3)
+        ?move(1)
+        ?goToPage(1)
+        ?print()
 );
 setCommand(
-    AWARENESS=1, page=0,
-    asynch->setTape(4) // Set the value several positions before the start value to 4
-    asynch->stop()
+    AWARENESS=1, PAGE=0,
+    ?setTape(4) // Set the value several positions before the start value to 4
+    ?stop()
     // Print the final results
-    asynch->print()
+    ?print()
 );
 
 setCommand(
-    AWARENESS=2, page=1,
-    asynch->setTape(0)
-    asynch->move(-4)
-    asynch->goToPage(0)
-    asynch->print()
+    AWARENESS=2, PAGE=1,
+    ?setTape(0)
+    ?move(-4)
+    ?goToPage(0)
+    ?print()
 );
 
 run();
