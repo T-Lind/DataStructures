@@ -23,7 +23,7 @@ public class TuringMachine extends CommandList {
         pages = new ArrayList<>();
         awareness = 0;
         page = 0;
-        position = startPos;
+        position = startPos+1;
         tape = new HashMap<>();
     }
 
@@ -34,17 +34,17 @@ public class TuringMachine extends CommandList {
         tape = new HashMap<>();
         for (int i = 0; i < defaultValues.length; i++)
             tape.put(i, defaultValues[i]);
-        position = 0;
+        position = 1;
     }
 
     public TuringMachine(Integer startPos, int... defaultValues) {
         pages = new ArrayList<>();
-        awareness = 0;
+        awareness = defaultValues[1];
         page = 0;
         tape = new HashMap<>();
         for (int i = 0; i < defaultValues.length; i++)
             tape.put(i, defaultValues[i]);
-        position = startPos;
+        position = startPos+1;
     }
 
     public TuringMachine(Integer startPos, Integer numItemsTape) {
@@ -52,7 +52,8 @@ public class TuringMachine extends CommandList {
         awareness = 0;
         page = 0;
         tape = new HashMap<>();
-        for (Integer i = 0; i < numItemsTape; i++)
+        tape.put(0, SECTION);
+        for (Integer i = 1; i < numItemsTape; i++)
             tape.put(i, 0);
         position = startPos;
     }
@@ -112,6 +113,24 @@ public class TuringMachine extends CommandList {
 
     public void move(Integer moveAmount) {
         position = moveAmount + position;
+        while(getTape().equals(SECTION))
+            position++;
+    }
+    public void goToNextSection() {
+        boolean nextSectionFound = false;
+        while(!nextSectionFound){
+            nextSectionFound = getTape().equals(SECTION);
+            position++;
+        }
+    }
+    public void goToPrevSection() {
+        boolean prevSectionFound = false;
+        position-=2;
+        while(!prevSectionFound){
+            prevSectionFound = getTape().equals(SECTION);
+            position--;
+        }
+        position+=2;
     }
 
     public void setTape(Integer value) {
@@ -123,7 +142,7 @@ public class TuringMachine extends CommandList {
     }
 
     public void printTape() {
-        StringBuilder printStr = new StringBuilder();
+        var printStr = new StringBuilder();
         Set<Integer> keys = tape.keySet();
         int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
@@ -134,8 +153,13 @@ public class TuringMachine extends CommandList {
                 max = value;
         }
         for (int i = min; i <= max; i++) {
-            if (tape.get(i) != null) {
-                printStr.append(tape.get(i)).append(" ");
+            var value = tape.get(i);
+            if (value != null) {
+                if(value != SECTION)
+                    printStr.append(tape.get(i)).append(" ");
+                else {
+                    printStr.append(SECTION_CHAR).append(" ");
+                }
             } else {
                 printStr.append("Ø ");
             }

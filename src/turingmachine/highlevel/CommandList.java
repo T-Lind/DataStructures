@@ -2,6 +2,8 @@ package turingmachine.highlevel;
 
 public class CommandList {
     public static int STOP = Integer.MAX_VALUE;
+    public static int SECTION = Integer.MIN_VALUE;
+    public static String SECTION_CHAR = "X";
 
     public static String MACHINE_SYMBOL = "";
     public static String FUTURE_SYMBOL = "?";
@@ -30,6 +32,8 @@ public class CommandList {
     public static String FUTURE_SETTAPE = FUTURE_SYMBOL + CONNECTOR + "setTape";
     public static String FUTURE_MOVE = FUTURE_SYMBOL + CONNECTOR + "move";
     public static String FUTURE_GOTOPAGE = FUTURE_SYMBOL + CONNECTOR + "goToPage";
+    public static String FUTURE_GOTONEXTSEC = FUTURE_SYMBOL + CONNECTOR + "nextSection()";
+    public static String FUTURE_GOTOPREVSEC = FUTURE_SYMBOL + CONNECTOR + "prevSection()";
 
     public static String RUN = MACHINE_SYMBOL + CONNECTOR + "run()";
 
@@ -54,6 +58,9 @@ public class CommandList {
             FUTURE_GOTOPAGE = FUTURE_SYMBOL + CONNECTOR + "goToPage";
 
             RUN = MACHINE_SYMBOL + CONNECTOR + "run()";
+
+            FUTURE_GOTONEXTSEC = FUTURE_SYMBOL + CONNECTOR + "nextSection()";
+            FUTURE_GOTOPREVSEC = FUTURE_SYMBOL + CONNECTOR + "prevSection()";
         } else {
             // TODO: Implement this feature for non-empty function calls
             GENERATE_MACHINE = "generate()" + MACHINE_SYMBOL;
