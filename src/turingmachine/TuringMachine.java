@@ -90,6 +90,14 @@ public class TuringMachine extends CommandList {
         return pages.get(page).get(awareness);
     }
 
+    public int getPosition(){
+        return position;
+    }
+
+    public void printPosition(){
+        System.out.println("Position: "+position);
+    }
+
     public void run() {
         while (page != STOP) {
             var commands = pages.get(page).get(awareness);
@@ -112,9 +120,21 @@ public class TuringMachine extends CommandList {
 
 
     public void move(Integer moveAmount) {
-        position = moveAmount + position;
-        while(getTape().equals(SECTION))
-            position++;
+        int startPos = position;
+        if(moveAmount > 0) {
+            for (int i = startPos; i<startPos+moveAmount;i++) {
+                position++;
+                while(getTape() == SECTION)
+                    position++;
+            }
+        }
+        else {
+            for (int i = startPos; i>startPos+moveAmount;i--) {
+                position--;
+                while(getTape() == SECTION)
+                    position--;
+            }
+        }
     }
     public void goToNextSection() {
         boolean nextSectionFound = false;

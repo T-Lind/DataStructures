@@ -10,6 +10,8 @@ public class CommandList {
     public static String CONNECTOR = "";
     public static String DEFINE = "DEFINE";
 
+    public static String POSITION = "POSITION";
+
     public static String DELIMITER_OPEN = "(";
     public static String DELIMITER_CLOSE = ")";
     public static String COMMENT = "//";

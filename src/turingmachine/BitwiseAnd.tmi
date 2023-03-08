@@ -3,7 +3,7 @@
 */
 print("Starting turing machine...");
 
-setValues(X 1 0 X 0 1 X 0 0 X 1 1 X 2);
+setValues(X 1 1 1 1 1 2 X 1 0 1 0 1 2);
 setPosition(0);
 
 generate();
@@ -11,56 +11,53 @@ generate();
 print();
 setCommand(
     AWARENESS=0, PAGE=0,
-        ?move(1)
+        ?setTape(0)
+        ?move(6)
         ?goToPage(1)
+        ?print(POSITION)
 );
 
 setCommand(
     AWARENESS=1, PAGE=0,
-        ?move(1)
+        ?setTape(0)
+        ?move(6)
         ?goToPage(2)
+        ?print(POSITION)
 );
 
 setCommand(
     AWARENESS=2, PAGE=0,
+        ?print(POSITION)
         ?stop()
 );
 
-
 setCommand(
     AWARENESS=0, PAGE=1,
-        ?move(-1)
         ?setTape(0)
-        ?move(1)
-        ?setTape(0)
-        ?move(2)
+        ?move(-5)
+        ?print(POSITION)
         ?goToPage(0)
 );
 setCommand(
     AWARENESS=1, PAGE=1,
-        ?move(-1)
         ?setTape(0)
-        ?move(1)
-        ?setTape(0)
-        ?move(2)
+        ?move(-5)
+        ?print(POSITION)
         ?goToPage(0)
 );
 setCommand(
     AWARENESS=0, PAGE=2,
-        ?move(-1)
         ?setTape(0)
-        ?move(1)
-        ?setTape(0)
-        ?move(2)
+        ?move(-5)
+        ?print(POSITION)
         ?goToPage(0)
 );
 setCommand(
     AWARENESS=1, PAGE=2,
-        ?move(-1)
-        ?setTape(0)
-        ?move(1)
-        ?setTape(2)
-        ?move(2)
+        ?setTape(1)
+        ?move(-5)
+        ?print("Setting...")
+        ?print(POSITION)
         ?goToPage(0)
 );
 

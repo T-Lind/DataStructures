@@ -6,6 +6,7 @@ import turingmachine.highlevel.CommandList;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -108,8 +109,12 @@ public class TuringInterpreter extends CommandList {
                         machine.addCommand(page, awareness, TuringMachine::stop, false);
                     } else if (inside.startsWith(FUTURE_PRINT)) {
                         String printStatement = getInsideDelimiters(inside);
-                        if (printStatement.length() == 0)
+                        if (printStatement.length() == 0) {
                             machine.addCommand(page, awareness, (m) -> m.printTape());
+                        }
+                        else if (printStatement.equals(POSITION)) {
+                            machine.addCommand(page, awareness, (m) -> m.printPosition());
+                        }
                         else {
                             machine.addCommand(page, awareness, (m) -> System.out.println(printStatement.substring(1, printStatement.length() - 1)));
                         }
