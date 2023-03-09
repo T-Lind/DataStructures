@@ -1,66 +1,66 @@
 /*
-    Should invert all bits
+    Should apply and operation in a bitwise manner, leaving result in second "byte" while first is unchanged
+
+    Expected output:
+    Final result:
+    # 1 0 1 0 1 1 1 2 # 0 0 1 0 1 1 1 2
 */
 print("Starting turing machine...");
 
-setValues(X 1 1 1 1 1 2 X 1 0 1 0 1 2);
+setValues(# 1 0 1 0 1 1 1 2 # 0 1 1 0 1 1 1 2);
 setPosition(0);
+
+val forward = 8;
+val back = -7;
+
 
 generate();
 
 print();
 setCommand(
     AWARENESS=0, PAGE=0,
-        ?setTape(0)
-        ?move(6)
+        ?move(forward)
         ?goToPage(1)
-        ?print(POSITION)
+        ?print(?readTape())
 );
 
 setCommand(
     AWARENESS=1, PAGE=0,
-        ?setTape(0)
-        ?move(6)
+        ?move(forward)
         ?goToPage(2)
-        ?print(POSITION)
+        ?print(?readTape())
 );
 
 setCommand(
     AWARENESS=2, PAGE=0,
-        ?print(POSITION)
         ?stop()
 );
 
 setCommand(
     AWARENESS=0, PAGE=1,
         ?setTape(0)
-        ?move(-5)
-        ?print(POSITION)
+        ?move(back)
         ?goToPage(0)
 );
 setCommand(
     AWARENESS=1, PAGE=1,
         ?setTape(0)
-        ?move(-5)
-        ?print(POSITION)
+        ?move(back)
         ?goToPage(0)
 );
 setCommand(
     AWARENESS=0, PAGE=2,
         ?setTape(0)
-        ?move(-5)
-        ?print(POSITION)
+        ?move(back)
         ?goToPage(0)
 );
 setCommand(
     AWARENESS=1, PAGE=2,
         ?setTape(1)
-        ?move(-5)
-        ?print("Setting...")
-        ?print(POSITION)
+        ?move(back)
         ?goToPage(0)
 );
 
 run();
+print("Final result:");
 print();
-print("Finished.");

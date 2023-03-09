@@ -1,16 +1,15 @@
 package turingmachine;
 
-import org.jetbrains.annotations.NotNull;
 import turingmachine.highlevel.CommandList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class TuringInterpreter extends CommandList {
+    public static HashMap<String, String> mappedVars;
     public static void main(String[] args) throws FileNotFoundException {
         StringBuilder summedArgs = new StringBuilder();
         for (String arg : args)
@@ -19,6 +18,7 @@ public class TuringInterpreter extends CommandList {
         var program = new File(summedArgs.toString());
         var reader = new Scanner(program);
         var readString = new StringBuilder();
+        mappedVars = new HashMap<>();
         boolean inCommentBlock = false;
         while (reader.hasNextLine()) {
             var line = reader.nextLine();
@@ -48,6 +48,9 @@ public class TuringInterpreter extends CommandList {
                 }
             } else if (line.startsWith(SET_POSITION)) {
                 startPosition = Integer.parseInt(getInsideDelimiters(line));
+            } else if (line.startsWith(VAL)) {
+                String[] items = line.split(" ");
+                mappedVars.put(items[1], items[3]);
             } else if (line.startsWith(DEFINE)) {
                 String inside = getInsideDelimiters(line);
                 String symbol = inside.substring(inside.indexOf("\"") + 1, inside.lastIndexOf("\""));
@@ -115,6 +118,12 @@ public class TuringInterpreter extends CommandList {
                         else if (printStatement.equals(POSITION)) {
                             machine.addCommand(page, awareness, (m) -> m.printPosition());
                         }
+                        else if (printStatement.equals(READ_TAPE)) {
+                            machine.addCommand(page, awareness, (m) -> m.printTapeAt());
+                        }
+                        else if (printStatement.equals(READ_AWARENESS)) {
+                            machine.addCommand(page, awareness, (m) -> m.printAwareness());
+                        }
                         else {
                             machine.addCommand(page, awareness, (m) -> System.out.println(printStatement.substring(1, printStatement.length() - 1)));
                         }
@@ -146,7 +155,14 @@ public class TuringInterpreter extends CommandList {
     }
 
     public static int onlyKeepInt(String input) {
-        StringBuilder builder = new StringBuilder();
+        for(String key: mappedVars.keySet())
+            if(input.contains(key)) {
+                var rest = input.substring(input.indexOf(key)+key.length());
+                if(rest.length() == 0)
+                    return Integer.parseInt(mappedVars.get(key));
+                return Integer.parseInt(mappedVars.get(key))+Integer.parseInt(rest);
+            }
+        var builder = new StringBuilder();
         for (int i = 0; i < input.length(); i++) {
             if (INTEGERS.contains(input.substring(i, i + 1))) {
                 builder.append(input.charAt(i));
@@ -154,8 +170,6 @@ public class TuringInterpreter extends CommandList {
         }
         return Integer.parseInt(builder.toString());
     }
-
-    //bug
 
     private static String getInsideDelimiters(String s) {
         return s.substring(s.indexOf(DELIMITER_OPEN) + 1, s.lastIndexOf(DELIMITER_CLOSE));

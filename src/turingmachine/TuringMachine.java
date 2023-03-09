@@ -161,6 +161,14 @@ public class TuringMachine extends CommandList {
         return tape.get(position);
     }
 
+    public void printTapeAt(){
+        System.out.println("Current value: "+getTape());
+    }
+
+    public void printAwareness(){
+        System.out.println("Current awareness: "+awareness);
+    }
+
     public void printTape() {
         var printStr = new StringBuilder();
         Set<Integer> keys = tape.keySet();
