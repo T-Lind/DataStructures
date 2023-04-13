@@ -2,17 +2,24 @@ package turingmachine.highlevel;
 
 public class CommandList {
     public static int STOP = Integer.MAX_VALUE;
+    public static int SECTION = Integer.MIN_VALUE;
+    public static String SECTION_CHAR = "#";
 
     public static String MACHINE_SYMBOL = "";
     public static String FUTURE_SYMBOL = "?";
     public static String CONNECTOR = "";
     public static String DEFINE = "DEFINE";
 
+    public static String POSITION = FUTURE_SYMBOL + CONNECTOR + "position";
+    public static String READ_TAPE = FUTURE_SYMBOL + CONNECTOR + "readTape()";
+    public static String READ_AWARENESS = FUTURE_SYMBOL + CONNECTOR + "awareness";
+
     public static String DELIMITER_OPEN = "(";
     public static String DELIMITER_CLOSE = ")";
     public static String COMMENT = "//";
     public static String[] BLOCK_COMMENT = {"/*", "*/"};
     public static String INTEGERS = "-0123456789";
+    public static String VAL = "val";
 
     public static String PAGE = "PAGE=";
     public static String AWARENESS = "AWARENESS=";
@@ -30,6 +37,8 @@ public class CommandList {
     public static String FUTURE_SETTAPE = FUTURE_SYMBOL + CONNECTOR + "setTape";
     public static String FUTURE_MOVE = FUTURE_SYMBOL + CONNECTOR + "move";
     public static String FUTURE_GOTOPAGE = FUTURE_SYMBOL + CONNECTOR + "goToPage";
+    public static String FUTURE_GOTONEXTSEC = FUTURE_SYMBOL + CONNECTOR + "nextSection()";
+    public static String FUTURE_GOTOPREVSEC = FUTURE_SYMBOL + CONNECTOR + "prevSection()";
 
     public static String RUN = MACHINE_SYMBOL + CONNECTOR + "run()";
 
@@ -54,6 +63,13 @@ public class CommandList {
             FUTURE_GOTOPAGE = FUTURE_SYMBOL + CONNECTOR + "goToPage";
 
             RUN = MACHINE_SYMBOL + CONNECTOR + "run()";
+
+            FUTURE_GOTONEXTSEC = FUTURE_SYMBOL + CONNECTOR + "nextSection()";
+            FUTURE_GOTOPREVSEC = FUTURE_SYMBOL + CONNECTOR + "prevSection()";
+
+            POSITION = FUTURE_SYMBOL + CONNECTOR + "position";
+            READ_TAPE = FUTURE_SYMBOL + CONNECTOR + "readTape()";
+            READ_AWARENESS = FUTURE_SYMBOL + CONNECTOR + "awareness";
         } else {
             // TODO: Implement this feature for non-empty function calls
             GENERATE_MACHINE = "generate()" + MACHINE_SYMBOL;

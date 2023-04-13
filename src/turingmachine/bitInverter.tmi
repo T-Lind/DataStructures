@@ -1,0 +1,29 @@
+/*
+    Should invert all bits
+*/
+print("Starting turing machine...");
+
+setValues(1 0 1 1 0 1 1 0 2);
+setPosition(0);
+
+generate();
+
+print();
+setCommand(
+    AWARENESS=0, PAGE=0,
+        ?setTape(1)
+        ?move(1)
+);
+setCommand(
+    AWARENESS=1, PAGE=0,
+        ?setTape(0)
+        ?move(1)
+);
+setCommand(
+    AWARENESS=2, PAGE=0,
+        ?stop()
+);
+
+run();
+print();
+print("Finished.");
