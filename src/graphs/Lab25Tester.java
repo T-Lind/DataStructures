@@ -1,6 +1,6 @@
 package graphs;
 
-import junit.framework.*;
+import junit.framework.TestCase;
 
 import java.util.List;
 import java.util.Map;

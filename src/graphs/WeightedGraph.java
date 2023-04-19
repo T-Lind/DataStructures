@@ -9,7 +9,7 @@ public interface WeightedGraph<E> extends Graph<E>
      *
      *	@param from the node to set the weight from
      *	@param to the node to set the weight to
-     *	@param weight the weight to set
+     *	@param the weight to set
      */
 	public void setWeight(E from, E to, int weight);
 	
