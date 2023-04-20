@@ -9,6 +9,7 @@ public class CommandList {
     public static String FUTURE_SYMBOL = "?";
     public static String CONNECTOR = "";
     public static String DEFINE = "DEFINE";
+    public static String DEBUG = MACHINE_SYMBOL + CONNECTOR + "enableDebug()";
 
     public static String POSITION = FUTURE_SYMBOL + CONNECTOR + "position";
     public static String READ_TAPE = FUTURE_SYMBOL + CONNECTOR + "readTape()";

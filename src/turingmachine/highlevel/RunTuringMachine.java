@@ -1,4 +1,6 @@
-package turingmachine;
+package turingmachine.highlevel;
+
+import turingmachine.highlevel.TuringMachine;
 
 public class RunTuringMachine {
     public static void main(String[] args) {

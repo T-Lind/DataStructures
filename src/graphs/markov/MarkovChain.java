@@ -39,7 +39,8 @@ public class MarkovChain {
     public void train(String filename) throws IOException {
         String content = null;
 
-        var f = new File(filename);
+//        var f = new File("C:\\Users\\lindauer_927142\\IdeaProjects\\DataStructures\\src\\graphs\\markov\\"+filename);
+        var f = new File("Z:\\My Drive\\ComputerScience\\IdeaProjects\\DataStructures\\src\\graphs\\markov\\"+filename);
         try (var reader = new BufferedReader(new InputStreamReader(new FileInputStream(f), "Cp1252"))) {
             content = reader.lines().collect(Collectors.joining());
         } catch (FileNotFoundException e) {
@@ -62,7 +63,6 @@ public class MarkovChain {
     public List<String> getNextWords() {
         //TODO: return List<String> of words that are neighbors of lastWord, weighted appropriately
         var list = new ArrayList<String>();
-        System.out.println(wg.getGraph().getNeighbors("to"));
         for (String neighbor : wg.getGraph().getNeighbors(lastWord)) {
             for (int i = 0; i < wg.getGraph().getWeight(lastWord, neighbor); i++)
                 list.add(neighbor);
@@ -87,11 +87,12 @@ public class MarkovChain {
      */
     public String generateSentence() {
         //TODO: generate a sentenec from [START] to [END]
+        lastWord = "[START]";
         var retStr = new StringBuilder();
         var stopped = false;
         while (!stopped) {
             var word = getNextWord();
-            retStr.append(word);
+            retStr.append(word).append(" ");
             if (word.equals("[END]"))
                 stopped = true;
         }

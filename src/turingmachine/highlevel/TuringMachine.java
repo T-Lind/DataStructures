@@ -1,4 +1,4 @@
-package turingmachine;
+package turingmachine.highlevel;
 
 import turingmachine.components.Command;
 import turingmachine.highlevel.CommandList;

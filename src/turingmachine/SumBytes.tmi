@@ -1,12 +1,11 @@
 /*
-    Should apply and operation in a bitwise manner, leaving result in second "byte" while first is unchanged
+    Should sum the two bytes specified, minus the terminating 2-bit at the end.
 
-    Expected output:
-    Final result:
-    # 1 0 1 0 1 1 1 2 # 0 0 1 0 1 1 1 2
+    Work in progress - currently only applies XOR operation.
 */
 print("Starting turing machine...");
 
+debugPrint();
 setValues(# 1 0 1 0 1 1 1 2 # 0 1 1 0 1 1 1 2);
 setPosition(0);
 
@@ -19,14 +18,12 @@ generate();
 print();
 setCommand(
     AWARENESS=0, PAGE=0,
-        ?print(?readTape())
         ?move(forward)
         ?goToPage(1)
 );
 
 setCommand(
     AWARENESS=1, PAGE=0,
-        ?print(?readTape())
         ?move(forward)
         ?goToPage(2)
 );
@@ -36,6 +33,8 @@ setCommand(
         ?stop()
 );
 
+// XOR Table
+
 setCommand(
     AWARENESS=0, PAGE=1,
         ?setTape(0)
@@ -44,19 +43,19 @@ setCommand(
 );
 setCommand(
     AWARENESS=1, PAGE=1,
-        ?setTape(0)
+        ?setTape(1)
         ?move(back)
         ?goToPage(0)
 );
 setCommand(
     AWARENESS=0, PAGE=2,
-        ?setTape(0)
+        ?setTape(1)
         ?move(back)
         ?goToPage(0)
 );
 setCommand(
     AWARENESS=1, PAGE=2,
-        ?setTape(1)
+        ?setTape(0)
         ?move(back)
         ?goToPage(0)
 );

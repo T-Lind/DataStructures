@@ -44,6 +44,7 @@ public class WordGraph {
      * Set lastWord to point to newWord
      */
     public void addWord(String newWord) {
+        newWord = newWord.trim();
         if (newWord.length() == 0)
             return;
 

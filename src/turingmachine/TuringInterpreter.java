@@ -1,6 +1,7 @@
 package turingmachine;
 
 import turingmachine.highlevel.CommandList;
+import turingmachine.highlevel.TuringMachine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,8 +32,9 @@ public class TuringInterpreter extends CommandList {
         }
         reader.close();
 
-        int[] values = null;
         int startPosition = 0;
+        boolean debug = false;
+        int[] values = null;
         TuringMachine machine = null;
         String[] lines = readString.toString().split(";");
         for (String line : lines) {
@@ -50,7 +52,8 @@ public class TuringInterpreter extends CommandList {
                 startPosition = Integer.parseInt(getInsideDelimiters(line));
             } else if (line.startsWith(VAL)) {
                 String[] items = line.split(" ");
-                mappedVars.put(items[1], items[3]);
+            } else if (line.startsWith(DEBUG)) {
+                debug = true;
             } else if (line.startsWith(DEFINE)) {
                 String inside = getInsideDelimiters(line);
                 String symbol = inside.substring(inside.indexOf("\"") + 1, inside.lastIndexOf("\""));
@@ -104,47 +107,66 @@ public class TuringInterpreter extends CommandList {
                         awareness = onlyKeepInt(inside);
                     }
                 }
+                final boolean dbg = debug;
                 for (int k = 2; k < insides.length; k++) {
                     var inside = insides[k];
                     if (inside.equals(" "))
                         continue;
                     if (inside.startsWith(FUTURE_STOP)) {
-                        machine.addCommand(page, awareness, TuringMachine::stop, false);
+                        machine.addCommand(page, awareness, (m) -> {
+                            if(dbg)
+                                System.out.println("Stopping machine.");
+                            m.stop();
+                        }, false);
                     } else if (inside.startsWith(FUTURE_PRINT)) {
                         String printStatement = getInsideDelimiters(inside);
                         if (printStatement.length() == 0) {
-                            machine.addCommand(page, awareness, (m) -> m.printTape());
+                            machine.addCommand(page, awareness, TuringMachine::printTape);
                         }
                         else if (printStatement.equals(POSITION)) {
-                            machine.addCommand(page, awareness, (m) -> m.printPosition());
+                            machine.addCommand(page, awareness, TuringMachine::printPosition);
                         }
                         else if (printStatement.equals(READ_TAPE)) {
-                            machine.addCommand(page, awareness, (m) -> m.printTapeAt());
+                            machine.addCommand(page, awareness, TuringMachine::printTapeAt);
                         }
                         else if (printStatement.equals(READ_AWARENESS)) {
-                            machine.addCommand(page, awareness, (m) -> m.printAwareness());
+                            machine.addCommand(page, awareness, TuringMachine::printAwareness);
                         }
                         else {
                             machine.addCommand(page, awareness, (m) -> System.out.println(printStatement.substring(1, printStatement.length() - 1)));
                         }
                     } else if (inside.startsWith(FUTURE_GOTONEXTSEC)) {
-                        machine.addCommand(page, awareness, (m) -> m.goToNextSection());
+                        machine.addCommand(page, awareness, (m) -> {
+                            if(dbg)
+                                System.out.println("Going to next section.");
+                            m.goToNextSection();
+                        });
 
                     } else if (inside.startsWith(FUTURE_GOTOPREVSEC)) {
-                        machine.addCommand(page, awareness, (m) -> m.goToPrevSection());
+                        machine.addCommand(page, awareness, (m) -> {
+                            if(dbg)
+                                System.out.println("Going to previous section.");
+                            m.goToPrevSection();
+                        });
                     } else if (inside.startsWith(FUTURE_SETTAPE)) {
                         final int value = onlyKeepInt(getInsideDelimiters(inside));
                         machine.addCommand(page, awareness, (m) -> {
+                            if(dbg)
+                                System.out.println("Setting tape to "+value);
                             m.setTape(value);
                         }, false);
                     } else if (inside.startsWith(FUTURE_MOVE)) {
                         final int value = onlyKeepInt(getInsideDelimiters(inside));
                         machine.addCommand(page, awareness, (m) -> {
+                            if(dbg)
+                                System.out.println("Moving "+value);
                             m.move(value);
                         }, false);
                     } else if (inside.startsWith(FUTURE_GOTOPAGE)) {
                         final int value = onlyKeepInt(getInsideDelimiters(inside));
                         machine.addCommand(page, awareness, (m) -> {
+                            if(dbg)
+                                System.out.println("Going to page "+value);
                             m.goToPage(value);
                         }, false);
                     }

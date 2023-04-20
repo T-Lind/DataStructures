@@ -3,7 +3,7 @@
 */
 print("Starting turing machine...");
 
-setValues(X 1 0 1 0 X 1 1 0 2);
+setValues(# 1 0 1 0 # 1 1 0 2);
 setPosition(0);
 
 generate();
