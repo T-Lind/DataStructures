@@ -17,7 +17,7 @@ public class WordGraph {
      * When adding a new word to the graph, add an edge between
      * the lastWord and the new word.
      */
-    private String lastWord;
+    public String lastWord;
 
     //CONSTRUCTOR
     public WordGraph() {
