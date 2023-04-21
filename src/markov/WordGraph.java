@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Scanner;
 
-class WordGraph {
+public class WordGraph {
     protected WeightedGraph<String> graph;
 
     protected String lastWord;

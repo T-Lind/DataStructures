@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  * Creates graphs of words designed for Markov chains.
  */
-class MarkovWordGraph extends WordGraph {
+public class MarkovWordGraph extends WordGraph {
     private String START;
     private String END;
 
