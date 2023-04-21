@@ -22,6 +22,14 @@ public class MarkovChainGen3 extends MarkovChainGen2 {
         thirdLastWord = null;
     }
 
+    public MarkovChainGen3(String filename, String start, String end) {
+        super();
+        wgTriples = new MarkovWordGraph(start, end);
+
+        thirdLastWord = null;
+        train(filename);
+    }
+
     public MarkovChainGen3(String filename){
         this();
         train(filename);

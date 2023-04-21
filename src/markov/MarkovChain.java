@@ -7,21 +7,17 @@ import java.util.Map;
 public class MarkovChain {
     public final static String START_SIGNAL = "[START]";
     public final static String END_SIGNAL = "[END]";
+    public final static String FILEPATH = "src\\markov\\";
 
-    public final static String FILEPATH = "Z:\\My Drive\\ComputerScience\\IdeaProjects\\DataStructures\\src\\markov\\";
+    protected final MarkovWordGraph wg;
 
-    private MarkovWordGraph wg;
-
-    private String lastWord;
+    protected String lastWord;
 
     protected String start;
 
     public MarkovChain() {
         wg = new MarkovWordGraph(START_SIGNAL, END_SIGNAL);
-
         start = START_SIGNAL;
-
-        lastWord = null;
     }
 
     public MarkovChain(String filename) {
@@ -77,13 +73,38 @@ public class MarkovChain {
         var ret = new StringBuilder();
 
         do {
-            ret.append(getNextWord());
-            ret.append(" ");
+            var word = getNextWord();
+            if(!areImproperChars(word)) {
+                ret.append(word);
+                ret.append(" ");
+            }
         }
         while (!wg.isEndWord(lastWord));
 
-        return ret.toString().trim();
+        var trimmed = cleanup(ret.toString());
+        if (count(trimmed, ' ') < 3 || areImproperChars(trimmed))
+            return generateSentence();
+        return trimmed;
     }
 
+    static String cleanup(String input){
+        input = input.replace('�', '\'');
+        return input;
+    }
 
+    static int count(String input, char c){
+        int cnt = 0;
+        for(char character: input.toCharArray())
+            if(character == c)
+                cnt++;
+        return cnt;
+    }
+
+    static boolean areImproperChars(String input){
+        int cnt = 0;
+        for(char character: input.toCharArray())
+            if(Character.isUpperCase(character) || Character.isDigit(character) || character == '*')
+                cnt++;
+        return (float) cnt / input.length() > 0.5;
+    }
 }

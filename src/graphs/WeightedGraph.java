@@ -9,9 +9,9 @@ public interface WeightedGraph<E> extends Graph<E>
      *
      *	@param from the node to set the weight from
      *	@param to the node to set the weight to
-     *	@param the weight to set
+     *	@param weight weight to set
      */
-	public void setWeight(E from, E to, int weight);
+	void setWeight(E from, E to, int weight);
 	
 	/**
      *	Set the weight between two nodes
@@ -23,7 +23,7 @@ public interface WeightedGraph<E> extends Graph<E>
      *	@param to the node to get the weight to
      *	@return the weight between from and to or 0 if no edge or weight exists.
      */
-	public int getWeight(E from, E to);
+	int getWeight(E from, E to);
 	
 	/**
 	 *	Return a Mapping of Node -> Weight for all neighbors of node
@@ -31,5 +31,5 @@ public interface WeightedGraph<E> extends Graph<E>
 	 *	@param node the node to get weight mappings from
 	 *	@return mappings from node to weight
 	 */
-	public Map<E, Integer> getNeighborWeights(E node);
+	Map<E, Integer> getNeighborWeights(E node);
 }

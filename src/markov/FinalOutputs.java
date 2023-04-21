@@ -16,6 +16,7 @@ public class FinalOutputs {
         printParagraphFromSource(3, N_SENTENCES, "grimm.txt");
         printParagraphFromSource(3, N_SENTENCES, "shakespeare.txt");
         printParagraphFromSource(3, N_SENTENCES, "my-writing.txt");
+        printParagraphFromSource(3, N_SENTENCES, "shakespeare-sonnets.txt");
 
         printSonnet( "shakespeare-sonnets.txt");
     }
@@ -36,14 +37,8 @@ public class FinalOutputs {
     private static void printSonnet(String filename) {
         System.out.println("Source: " + filename);
         System.out.println("--------------------------");
-        var chain = new MarkovChainSonnet();
-        for (var i = 0; i < 12; i++) {
-            if (i >= 10)
-                System.out.print("    ");
-            System.out.println(chain.generateSentence());
-            if (i % 4 == 0)
-                System.out.println();
-        }
+        var chain = new MarkovChainSonnet("text\\" + filename);
+        System.out.println(chain.generateSonnet());
         System.out.println("--------------------------");
     }
 }

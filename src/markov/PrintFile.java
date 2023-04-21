@@ -7,7 +7,8 @@ import java.util.Scanner;
 
 public class PrintFile {
     public static void main(String[] args) {
-        processFileGen("Z:\\My Drive\\ComputerScience\\IdeaProjects\\DataStructures\\src\\markov\\text\\grimm.txt");
+//        processFileGen("Z:\\My Drive\\ComputerScience\\IdeaProjects\\DataStructures\\src\\markov\\text\\grimm.txt");
+        processFileGen("C:\\Users\\lindauer_927142\\IdeaProjects\\DataStructures\\src\\markov\\text\\shakespeare.txt");
     }
     public static void processFileGen(String filename) {
         try {
