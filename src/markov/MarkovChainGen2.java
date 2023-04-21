@@ -15,7 +15,10 @@ public class MarkovChainGen2 extends MarkovChain {
 
         secondLastWord = null;
     }
-
+    public MarkovChainGen2(String filename){
+        this();
+        train(filename);
+    }
 
     public String getSecondLastWord() {
         return secondLastWord;
@@ -54,7 +57,6 @@ public class MarkovChainGen2 extends MarkovChain {
     @Override
     public void updateMemory() {
         secondLastWord = getLastWord();
-        super.updateMemory();
     }
 
     @Override

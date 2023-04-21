@@ -1,6 +1,8 @@
 package markov;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -76,13 +78,17 @@ class MarkovWordGraph extends WordGraph {
 
     public void processFileGen(String filename, int order) {
         try {
-            //open the specified file
-            var file = new File(filename);
-            var in = new Scanner(file);
+//            //open the specified file
+//            var file = new File(filename);
+//            var in = new Scanner(file);
 
-            //loop through each line of the file and process it
-            while (in.hasNextLine())
-                processStringGen(in.nextLine(), order);
+//            //loop through each line of the file and process it
+//            while (in.hasNextLine()) {
+//                String line = in.nextLine();
+//                processStringGen(line, order);
+//            }
+            for(String line: new BufferedReader(new FileReader((filename))).lines().toList())
+                processStringGen(line, order);
         } catch (Exception e) {
             e.printStackTrace();
         }

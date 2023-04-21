@@ -15,6 +15,18 @@ public class MarkovChainGen3 extends MarkovChainGen2 {
         thirdLastWord = null;
     }
 
+    public MarkovChainGen3(String start, String end) {
+        super();
+        wgTriples = new MarkovWordGraph(start, end);
+
+        thirdLastWord = null;
+    }
+
+    public MarkovChainGen3(String filename){
+        this();
+        train(filename);
+    }
+
 
     @Override
     public void train(String filename) {
@@ -42,7 +54,6 @@ public class MarkovChainGen3 extends MarkovChainGen2 {
 
     @Override
     public String generateSentence() {
-        // Fresh start
         thirdLastWord = null;
 
         return super.generateSentence();

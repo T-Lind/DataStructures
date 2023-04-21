@@ -1,6 +1,8 @@
 package markov;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.Scanner;
 
 class WordGraph {
@@ -34,11 +36,17 @@ class WordGraph {
 
     public void processFile(String filename) {
         try {
-            var file = new File(filename);
-            var scanner = new Scanner(file);
+//            //open the specified file
+//            var file = new File(filename);
+//            var in = new Scanner(file);
 
-            while (scanner.hasNextLine())
-                addWordsFromString(scanner.nextLine());
+//            //loop through each line of the file and process it
+//            while (in.hasNextLine()) {
+//                String line = in.nextLine();
+//                processStringGen(line, order);
+//            }
+            for(String line: new BufferedReader(new FileReader((filename))).lines().toList())
+                addWordsFromString(line);
         } catch (Exception e) {
             e.printStackTrace();
         }

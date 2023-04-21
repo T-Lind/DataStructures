@@ -1,11 +1,11 @@
 package markov;
 
 public class MarkovChainTester {
-    private static final int N_SENTENCES = 10;
+    private static final int N_SENTENCES = 2;
 
     public static void main(String[] args) {
         //https://www.gutenberg.org/catalog/
-        var testFile = "training_material\\jane-austen.txt";
+        var testFile = "text\\jane-austen.txt";
 
         // Test 1st order markov chain
         var chain = new MarkovChain();

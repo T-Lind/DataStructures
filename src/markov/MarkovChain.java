@@ -24,6 +24,11 @@ public class MarkovChain {
         lastWord = null;
     }
 
+    public MarkovChain(String filename) {
+        this();
+        train(filename);
+    }
+
     public String getLastWord() {
         return lastWord;
     }
@@ -59,6 +64,7 @@ public class MarkovChain {
         var wordsToPick = this.getNextWords();
 
         this.updateMemory();
+//        if(wordsToPick.size() == 0)
         lastWord = wordsToPick.get((int) (Math.random() * wordsToPick.size()));
 
         return lastWord;
